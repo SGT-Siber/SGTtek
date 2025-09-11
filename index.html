@@ -3,68 +3,129 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>SGT Bilişim — Test Sayfası</title>
-  <style>
-    :root{--accent:#0ea5e9}
-    *{box-sizing:border-box}
-    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:#0b1220;color:#e6edf3}
-    header{padding:28px 16px;border-bottom:1px solid #223}
-    .container{max-width:980px;margin:0 auto;padding:0 16px}
-    h1{margin:0;font-size:22px;letter-spacing:.3px}
-    main{padding:56px 0}
-    .card{background:#0f172a;border:1px solid #1f2937;border-radius:16px;padding:24px}
-    .row{display:flex;flex-wrap:wrap;gap:16px;margin-top:16px}
-    .btn{display:inline-block;padding:10px 14px;border-radius:12px;border:1px solid #334155;text-decoration:none;color:#e6edf3}
-    .btn:hover{border-color:var(--accent)}
-    footer{border-top:1px solid #223;padding:24px 0;color:#9aa4b2}
-    .watermark{position:fixed;right:12px;bottom:12px;opacity:.5;font-weight:700;letter-spacing:.1em;pointer-events:none}
-    .tag{display:inline-block;font-size:12px;color:#a3b3c3;background:#0b223a;border:1px solid #123;border-radius:999px;padding:4px 8px;margin-right:6px}
-  </style>
+  <title>SGT Bilişim — Siber Güvenlik & DMO Ürünleri</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="assets/favicon.ico" />
+  <!-- PapaParse: CSV okumak için küçük bir kütüphane -->
+  <script defer src="https://unpkg.com/papaparse@5.4.1/papaparse.min.js"></script>
+  <script defer src="app.js"></script>
 </head>
 <body>
-  <header>
+  <header class="site-header">
     <div class="container">
-      <h1>SGT Bilişim — Test</h1>
+      <div class="brand">
+        <img src="assets/sgt-logo.svg" alt="SGT Bilişim" onerror="this.style.display='none'"/>
+        <h1>SGT Bilişim</h1>
+      </div>
+      <nav class="nav">
+        <a href="#hakkimizda">Hakkımızda</a>
+        <a href="#servisler">Hizmetler</a>
+        <a href="#urunler">Ürünler</a>
+        <a href="#iletisim">İletişim</a>
+      </nav>
     </div>
   </header>
 
-  <main class="container">
-    <div class="card">
-      <h2>Merhaba! 🎉</h2>
-      <p>Bu, GitHub Pages üzerinde yayına çıkmak için **test sayfasıdır**. DNS ve Pages ayarları doğruysa bu metni <strong>www.sgtek.com.tr</strong> adresinde görürsün.</p>
+  <section class="hero">
+    <div class="container">
+      <h2>Kuruma Uygun Siber Güvenlik Çözümleri</h2>
+      <p>SGT, güvenlik danışmanlığı ve yönetilen hizmetlerin yanı sıra, DMO üzerinden
+         <strong>masaüstü bilgisayar, notebook, yazıcı ve monitör</strong> tedariki yapar.</p>
+      <a class="btn" href="#urunler">DMO Ürünlerine Göz At</a>
+    </div>
+  </section>
 
-      <div class="row">
-        <span class="tag">Siber Güvenlik</span>
-        <span class="tag">DMO Tedarik</span>
-        <span class="tag">Masaüstü • Notebook • Yazıcı • Monitör</span>
+  <main class="container">
+    <section id="hakkimizda" class="section">
+      <h3>Hakkımızda</h3>
+      <p>SGT Bilişim; kamu ve kurumsal müşterilere yönelik siber güvenlik danışmanlığı, denetim, Red Team,
+         SIEM/SOC kurulumu ve yönetimi sunar. Donanım tedarikinde ise DMO kataloğu üzerinden
+         geniş ürün yelpazesi ile hızlı teslimat sağlar.</p>
+    </section>
+
+    <section id="servisler" class="section cards">
+      <article class="card">
+        <h4>Danışmanlık & Denetim</h4>
+        <p>ISO 27001, KVKK uyumluluk, zafiyet analizi ve sızma testi.</p>
+      </article>
+      <article class="card">
+        <h4>SOC & SIEM</h4>
+        <p>24/7 izleme, olay müdahalesi, log korelasyonu ve raporlama.</p>
+      </article>
+      <article class="card">
+        <h4>Uç Nokta Güvenliği</h4>
+        <p>EDR/XDR çözümleri, politika tasarımı ve yönetimi.</p>
+      </article>
+      <article class="card">
+        <h4>DMO Donanım Tedariki</h4>
+        <p>Masaüstü, Notebook, Yazıcı, Monitör — hızlı fiyat ve uygun teslim.</p>
+      </article>
+    </section>
+
+    <section id="urunler" class="section">
+      <div class="section-head">
+        <h3>DMO Ürünleri</h3>
+        <div class="controls">
+          <input id="q" type="search" placeholder="Ara: marka, model, özellik…" />
+          <select id="cat">
+            <option value="">Tüm Kategoriler</option>
+            <option>Masaüstü</option>
+            <option>Notebook</option>
+            <option>Yazıcı</option>
+            <option>Monitör</option>
+          </select>
+          <select id="sort">
+            <option value="default">Sırala</option>
+            <option value="price-asc">Fiyat ↑</option>
+            <option value="price-desc">Fiyat ↓</option>
+            <option value="stock">Stok</option>
+          </select>
+        </div>
       </div>
 
-      <p style="margin-top:16px">
-        <a class="btn" href="#" onclick="alert('Her şey çalışıyor!');return false;">Buton testi</a>
-        <a class="btn" href="#durum">Durum Bölümüne Git</a>
-      </p>
-    </div>
+      <div id="grid" class="product-grid" aria-live="polite"></div>
+      <div id="pager" class="pager"></div>
 
-    <div id="durum" class="card" style="margin-top:16px">
-      <h3>Yayın Durumu</h3>
-      <ul id="checks" style="line-height:1.9;margin:0;padding-left:18px"></ul>
-      <script>
-        const checks = [
-          ["CNAME dosyası", location.hostname],
-          ["HTTPS (Enforce HTTPS)", location.protocol === "https:" ? "EVET" : "HAYIR"],
-          ["Sayfa yüklendi", new Date().toLocaleString("tr-TR")]
-        ];
-        document.getElementById("checks").innerHTML = checks
-          .map(([k,v])=>`<li><strong>${k}:</strong> ${v}</li>`).join("");
-      </script>
-    </div>
+      <template id="product-card">
+        <article class="p-card">
+          <a class="imgwrap" target="_blank" rel="noopener">
+            <img alt="">
+          </a>
+          <div class="p-body">
+            <div class="p-meta">
+              <span class="p-cat"></span>
+              <span class="p-stock"></span>
+            </div>
+            <h4 class="p-title"></h4>
+            <p class="p-desc"></p>
+            <div class="p-foot">
+              <div class="p-price"></div>
+              <a class="btn btn-sm p-link" target="_blank" rel="noopener">Detay</a>
+            </div>
+          </div>
+        </article>
+      </template>
+    </section>
+
+    <section id="iletisim" class="section">
+      <h3>İletişim</h3>
+      <ul class="contact">
+        <li>E-posta: <a href="mailto:info@sgtek.com.tr">info@sgtek.com.tr</a></li>
+        <li>Telefon: <a href="tel:+90xxxxxxxxxx">+90 (___) ___ __ __</a></li>
+        <li>Adres: Ankara</li>
+      </ul>
+    </section>
   </main>
 
-  <footer>
-    <div class="container">© <span id="yil"></span> SGT Bilişim — Test</div>
+  <footer class="site-footer">
+    <div class="container">
+      © <span id="yil"></span> SGT Bilişim — Güvenle Dijitalleşin
+    </div>
   </footer>
+
+  <!-- opsiyonel filigran -->
   <div class="watermark">SGT</div>
-  <script>document.getElementById('yil').textContent=new Date().getFullYear()</script>
+
+  <script>document.getElementById('yil').textContent = new Date().getFullYear();</script>
 </body>
 </html>
-
