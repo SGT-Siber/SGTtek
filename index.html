@@ -1,131 +1,124 @@
 <!doctype html>
 <html lang="tr">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>SGT Bilişim — Siber Güvenlik & DMO Ürünleri</title>
-  <link rel="stylesheet" href="styles.css" />
-  <link rel="icon" href="assets/favicon.ico" />
-  <!-- PapaParse: CSV okumak için küçük bir kütüphane -->
-  <script defer src="https://unpkg.com/papaparse@5.4.1/papaparse.min.js"></script>
-  <script defer src="app.js"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SGTEK – Kurumlar için Teknoloji ve Güvenlik</title>
+  <meta name="description" content="DMO onaylı ürünler ve siber güvenlik hizmetleri">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header class="site-header">
-    <div class="container">
-      <div class="brand">
-        <img src="assets/sgt-logo.svg" alt="SGT Bilişim" onerror="this.style.display='none'"/>
-        <h1>SGT Bilişim</h1>
-      </div>
-      <nav class="nav">
-        <a href="#hakkimizda">Hakkımızda</a>
-        <a href="#servisler">Hizmetler</a>
-        <a href="#urunler">Ürünler</a>
-        <a href="#iletisim">İletişim</a>
-      </nav>
-    </div>
-  </header>
+<header class="header">
+  <div class="container header__inner">
+    <div class="brand">SGTEK</div>
+    <nav class="nav" aria-label="Ana menü">
+      <a href="#hakkimizda">Hakkımızda</a>
+      <a href="#hizmetler">Hizmetler</a>
+      <a href="#referanslar">Referanslar</a>
+      <a href="#blog">Haberler</a>
+      <a href="#iletisim">İletişim</a>
+      <a class="btn btn--primary" href="urunler.html" aria-label="Ürün Kataloğunu İncele">Ürünler</a>
+    </nav>
+  </div>
+</header>
 
-  <section class="hero">
-    <div class="container">
-      <h2>Kuruma Uygun Siber Güvenlik Çözümleri</h2>
-      <p>SGT, güvenlik danışmanlığı ve yönetilen hizmetlerin yanı sıra, DMO üzerinden
-         <strong>masaüstü bilgisayar, notebook, yazıcı ve monitör</strong> tedariki yapar.</p>
-      <a class="btn" href="#urunler">DMO Ürünlerine Göz At</a>
+<main id="icerik">
+  <!-- HERO -->
+  <section class="hero" role="region" aria-label="Karşılama">
+    <div class="container hero__grid">
+      <div class="hero__text">
+        <h1>Kurumlar için Teknoloji ve Güvenlik</h1>
+        <p>DMO onaylı ürün satışları ve kapsamlı siber güvenlik hizmetleri.</p>
+        <a class="btn btn--invert" href="urunler.html">Ürün Kataloğunu İncele</a>
+      </div>
+      <div class="hero__card" aria-hidden="true">
+        <h3>Öne Çıkanlar</h3>
+        <ul class="features">
+          <li>Bilgisayar &amp; Donanım Satışı</li>
+          <li>Siber Güvenlik Hizmetleri</li>
+          <li>Bakım &amp; Destek</li>
+          <li>DMO Ürün Kataloğu</li>
+        </ul>
+      </div>
     </div>
   </section>
 
-  <main class="container">
-    <section id="hakkimizda" class="section">
-      <h3>Hakkımızda</h3>
-      <p>SGT Bilişim; kamu ve kurumsal müşterilere yönelik siber güvenlik danışmanlığı, denetim, Red Team,
-         SIEM/SOC kurulumu ve yönetimi sunar. Donanım tedarikinde ise DMO kataloğu üzerinden
-         geniş ürün yelpazesi ile hızlı teslimat sağlar.</p>
-    </section>
-
-    <section id="servisler" class="section cards">
-      <article class="card">
-        <h4>Danışmanlık & Denetim</h4>
-        <p>ISO 27001, KVKK uyumluluk, zafiyet analizi ve sızma testi.</p>
-      </article>
-      <article class="card">
-        <h4>SOC & SIEM</h4>
-        <p>24/7 izleme, olay müdahalesi, log korelasyonu ve raporlama.</p>
-      </article>
-      <article class="card">
-        <h4>Uç Nokta Güvenliği</h4>
-        <p>EDR/XDR çözümleri, politika tasarımı ve yönetimi.</p>
-      </article>
-      <article class="card">
-        <h4>DMO Donanım Tedariki</h4>
-        <p>Masaüstü, Notebook, Yazıcı, Monitör — hızlı fiyat ve uygun teslim.</p>
-      </article>
-    </section>
-
-    <section id="urunler" class="section">
-      <div class="section-head">
-        <h3>DMO Ürünleri</h3>
-        <div class="controls">
-          <input id="q" type="search" placeholder="Ara: marka, model, özellik…" />
-          <select id="cat">
-            <option value="">Tüm Kategoriler</option>
-            <option>Masaüstü</option>
-            <option>Notebook</option>
-            <option>Yazıcı</option>
-            <option>Monitör</option>
-          </select>
-          <select id="sort">
-            <option value="default">Sırala</option>
-            <option value="price-asc">Fiyat ↑</option>
-            <option value="price-desc">Fiyat ↓</option>
-            <option value="stock">Stok</option>
-          </select>
-        </div>
-      </div>
-
-      <div id="grid" class="product-grid" aria-live="polite"></div>
-      <div id="pager" class="pager"></div>
-
-      <template id="product-card">
-        <article class="p-card">
-          <a class="imgwrap" target="_blank" rel="noopener">
-            <img alt="">
-          </a>
-          <div class="p-body">
-            <div class="p-meta">
-              <span class="p-cat"></span>
-              <span class="p-stock"></span>
-            </div>
-            <h4 class="p-title"></h4>
-            <p class="p-desc"></p>
-            <div class="p-foot">
-              <div class="p-price"></div>
-              <a class="btn btn-sm p-link" target="_blank" rel="noopener">Detay</a>
-            </div>
-          </div>
-        </article>
-      </template>
-    </section>
-
-    <section id="iletisim" class="section">
-      <h3>İletişim</h3>
-      <ul class="contact">
-        <li>E-posta: <a href="mailto:info@sgtek.com.tr">info@sgtek.com.tr</a></li>
-        <li>Telefon: <a href="tel:+90xxxxxxxxxx">+90 (___) ___ __ __</a></li>
-        <li>Adres: Ankara</li>
-      </ul>
-    </section>
-  </main>
-
-  <footer class="site-footer">
+  <!-- HAKKIMIZDA -->
+  <section id="hakkimizda" class="section">
     <div class="container">
-      © <span id="yil"></span> SGT Bilişim — Güvenle Dijitalleşin
+      <h2>Hakkımızda</h2>
+      <p>SGTEK, devlet kurumlarına (DMO) ve sınırlı ölçüde özel sektöre bilgisayar, monitör, yazıcı gibi donanım ürünlerinin tedarikini sağlayan; ayrıca kurumlara uçtan uca siber güvenlik hizmetleri sunan bir teknoloji şirketidir.</p>
     </div>
-  </footer>
+  </section>
 
-  <!-- opsiyonel filigran -->
-  <div class="watermark">SGT</div>
+  <!-- HİZMETLER -->
+  <section id="hizmetler" class="section section--alt">
+    <div class="container">
+      <h2>Hizmetler</h2>
+      <div class="cards">
+        <article class="card">
+          <h3>Donanım Tedarik</h3>
+          <p>DMO onaylı bilgisayar, monitör ve yazıcı ürünleri.</p>
+        </article>
+        <article class="card">
+          <h3>Siber Güvenlik</h3>
+          <p>Ağ güvenliği, risk analizi, danışmanlık ve eğitim.</p>
+        </article>
+        <article class="card">
+          <h3>Bakım &amp; Destek</h3>
+          <p>Kurulum, garanti süreçleri ve teknik destek.</p>
+        </article>
+      </div>
+    </div>
+  </section>
 
-  <script>document.getElementById('yil').textContent = new Date().getFullYear();</script>
+  <!-- REFERANSLAR -->
+  <section id="referanslar" class="section">
+    <div class="container">
+      <h2>Referanslar</h2>
+      <p>DMO ve çeşitli kamu kurumlarıyla gerçekleştirilen tedarik ve güvenlik projeleri.</p>
+    </div>
+  </section>
+
+  <!-- BLOG / HABERLER -->
+  <section id="blog" class="section section--alt">
+    <div class="container">
+      <h2>Haberler</h2>
+      <ul class="list">
+        <li>DMO ürün kataloğumuz güncellendi.</li>
+        <li>Siber güvenlik bilgilendirme semineri.</li>
+        <li>Yeni stok: monitör ve yazıcı modelleri.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- İLETİŞİM -->
+  <section id="iletisim" class="section">
+    <div class="container">
+      <h2>İletişim</h2>
+      <p><strong>E-posta:</strong> info@sgtek.com.tr</p>
+      <p><strong>Telefon:</strong> +90 312 000 00 00</p>
+      <p><strong>Adres:</strong> Örnek Mah. SGTEK Plaza No:1, Ankara</p>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <p>© <span id="yil"></span> SGTEK – Tüm Hakları Saklıdır</p>
+    <nav class="footer__nav">
+      <a href="#icerik">Başa Dön</a>
+      <a href="#">KVKK</a>
+      <a href="#">Gizlilik</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+  // Yıl otomatik
+  document.getElementById('yil').textContent = new Date().getFullYear();
+</script>
 </body>
 </html>
