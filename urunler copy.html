@@ -25,7 +25,7 @@
     </div>
   </header>
 
-  <!-- MAIN -->
+  <!-- MAIN (sadece arama + ürün grid) -->
   <main class="section">
     <div class="container">
       <h1 class="pg-title">Product Gallery</h1>
@@ -53,102 +53,61 @@
   </footer>
 
 <script>
-  // Footer yılı
   document.getElementById('yil').textContent = new Date().getFullYear();
 
-  // ===== Google Sheets Ayarları (CSV ile, sekme adından bağımsız) =====
-  const SHEET_ID  = "1RtHLgzmaAsjNfQM79b5jy4kkaRbPFdMznbO3kktr3Ng";
-  const SHEET_GID = "0"; // linkindeki gid=0
-  // CSV endpoint: Anyone with the link (Viewer) yeterli
-  const CSV_URL   = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=${SHEET_GID}`;
+  // ===== Google Sheets Kaynağı =====
+  // https://docs.google.com/spreadsheets/d/1RtHLgzmaAsjNfQM79b5jy4kkaRbPFdMznbO3kktr3Ng/edit?usp=sharing
+  const SHEET_ID   = "1RtHLgzmaAsjNfQM79b5jy4kkaRbPFdMznbO3kktr3Ng";
+  const SHEET_NAME = "Sayfa1"; // sekme adını gerçek ada göre değiştir
+  const GVIZ_URL   = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(SHEET_NAME)}`;
 
-  // Yardımcılar
-  const normalize = (s) =>
-    (s || "")
-      .toString()
-      .trim()
-      .toLowerCase()
-      .normalize("NFD")
-      .replace(/\p{Diacritic}/gu, ""); // türkçe aksanları kaldır
+  // Kolon başlıkları (esnek)
+  const headerMap = {
+    title: ["ürün başlığı","urun basligi","ürün","product","title"],
+    brand: ["marka","brand"],
+    photo: ["foto url","görsel url","resim url","image","photo"],
+    dmo:   ["dmo linki","dmo","dmo url"]
+  };
 
-  // Basit ve güvenli CSV ayrıştırıcı (tırnaklı alanları destekler)
-  function parseCSV(text){
-    const rows = [];
-    let row = [], val = "", inQuotes = false;
-    for (let i=0; i<text.length; i++){
-      const ch = text[i], next = text[i+1];
-      if (inQuotes){
-        if (ch === '"' && next === '"'){ val += '"'; i++; }
-        else if (ch === '"'){ inQuotes = false; }
-        else { val += ch; }
-      }else{
-        if (ch === '"'){ inQuotes = true; }
-        else if (ch === ','){ row.push(val); val = ""; }
-        else if (ch === '\n'){
-          row.push(val); rows.push(row); row = []; val = "";
-        }else if (ch === '\r'){ /* yoksay */ }
-        else { val += ch; }
-      }
+  function findHeaderIndex(cols, aliases){
+    for (let i=0;i<cols.length;i++){
+      const label=(cols[i].label||"").toString().trim().toLowerCase();
+      if (aliases.some(a => label===a || label.includes(a))) return i;
     }
-    row.push(val); rows.push(row);
-    // sondaki boş satırları temizle
-    return rows.filter(r => r.some(c => normalize(c) !== ""));
-  }
-
-  // Başlıkları tespit et
-  function detectColumns(headers){
-    const H = headers.map(normalize);
-    const find = (keywords) => H.findIndex(h => keywords.some(k => h.includes(k)));
-    // Foto başlıkları birden fazla olabilir (foto1/foto2/foto3…)
-    const photoIdxs = [];
-    H.forEach((h, i) => { if (h.includes("foto") || h.includes("gorsel") || h.includes("resim") || h.includes("image") || h.includes("photo")) photoIdxs.push(i); });
-    return {
-      title: find(["urun basligi","urun adi","urun adı","urun","product","title","name","ürun basligi","ürun başligi","ürun baslik","ürun baslıgı"]),
-      brand: find(["marka","brand","uretici","manufacturer"]),
-      dmo:   find(["dmo","dmo link","dmo url"]),
-      photos: photoIdxs
-    };
+    return -1;
   }
 
   async function fetchProducts(){
-    const resp = await fetch(CSV_URL, { cache: "no-store" });
-    if (!resp.ok) throw new Error("HTTP " + resp.status);
-    const csv  = await resp.text();
-    const rows = parseCSV(csv);
-    if (!rows.length) return [];
+    const resp = await fetch(GVIZ_URL);
+    const text = await resp.text();
+    const json = JSON.parse(text.replace(/^[^{]+/,'').replace(/;?\s*$/,''));
+    const cols = json.table.cols;
+    const rows = json.table.rows;
 
-    const headers = rows[0];
-    const idx = detectColumns(headers);
-
-    if (idx.title < 0) throw new Error('Kolon "Ürün Başlığı" bulunamadı');
+    const idxTitle = findHeaderIndex(cols, headerMap.title);
+    const idxBrand = findHeaderIndex(cols, headerMap.brand);
+    const idxPhoto = findHeaderIndex(cols, headerMap.photo);
+    const idxDmo   = findHeaderIndex(cols, headerMap.dmo);
 
     const items = [];
-    for (let r=1; r<rows.length; r++){
-      const c = rows[r];
-      const title = (c[idx.title] || "").toString().trim();
-      if (!title) continue;
-
-      const brand = idx.brand >= 0 ? (c[idx.brand] || "").toString().trim() : "";
-
-      let photo = "";
-      for (const pi of idx.photos){
-        const v = (c[pi] || "").toString().trim();
-        if (v){ photo = v; break; }
-      }
-
-      const dmo = idx.dmo >= 0 ? (c[idx.dmo] || "").toString().trim() : "";
-
-      items.push({ title, brand, photo, dmo });
+    for (const r of rows){
+      const c = r.c || [];
+      const title = (c[idxTitle]?.v || "").toString().trim();
+      if (!title) continue; // sadece başlığı olan satırlar
+      const brand = (idxBrand>=0 ? (c[idxBrand]?.v || "") : "").toString().trim();
+      const photo = (idxPhoto>=0 ? (c[idxPhoto]?.v || "") : "").toString().trim();
+      const dmo   = (idxDmo>=0   ? (c[idxDmo]?.v   || "") : "").toString().trim();
+      items.push({title, brand, photo, dmo});
     }
     return items;
   }
 
   function renderProducts(items){
-    const grid  = document.getElementById("productGrid");
+    const grid = document.getElementById("productGrid");
     const empty = document.getElementById("productEmpty");
     grid.innerHTML = "";
 
-    if (!items.length){ empty.hidden = false; return; }
+    if (!items.length){ empty.hidden=false; return; }
     empty.hidden = true;
 
     const frag = document.createDocumentFragment();
@@ -177,7 +136,7 @@
       if (it.brand){
         const brand = document.createElement("p");
         brand.className = "brand";
-        brand.innerHTML = `<strong>Marka:</strong> ${it.brand.toUpperCase()}`;
+        brand.innerHTML = `<strong>Brand:</strong> ${it.brand.toUpperCase()}`;
         card.appendChild(brand);
       }
 
@@ -196,7 +155,7 @@
     grid.appendChild(frag);
   }
 
-  // Canlı arama (başlık + marka)
+  // Basit canlı arama (başlık + marka)
   function wireSearch(items){
     const input = document.getElementById("searchInput");
     input.addEventListener("input", () => {
@@ -211,15 +170,12 @@
 
   (async function init(){
     try{
+      // Arama inputu var; kullanıcı yazdıkça filtreleyeceğiz
       const items = await fetchProducts();
       renderProducts(items);
       wireSearch(items);
-    }catch(err){
-      console.error("Ürünler yüklenemedi:", err);
-      const grid  = document.getElementById("productGrid");
-      const empty = document.getElementById("productEmpty");
-      empty.hidden = false;
-      grid.innerHTML = '<div class="product-empty">Ürünler yüklenemedi. Lütfen Sheet paylaşımı (Anyone with the link: Viewer) ve kolon başlıklarını kontrol edin.</div>';
+    }catch(e){
+      document.getElementById("productEmpty").hidden = false;
     }
   })();
 </script>
