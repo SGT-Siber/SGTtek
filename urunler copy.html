@@ -8,10 +8,68 @@
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/urunler.css">
   <style>
-    /* Modal başlangıçta kapalı */
     [hidden]{display:none!important}
     .overlay{display:none}
     .overlay.is-open{display:grid}
+    .pg-title{letter-spacing:.5px}
+
+    /* Kart + görsel buton (siyah çizgi/outline kaldırıldı) */
+    .product-card{display:flex;flex-direction:column;align-items:stretch;overflow:hidden}
+    .imgwrap{
+      margin-bottom:0;
+      border:0; background:transparent;
+      appearance:none; -webkit-appearance:none; -moz-appearance:none;
+      padding:0; cursor:pointer;
+    }
+    .imgwrap:focus,
+    .imgwrap:focus-visible,
+    .imgwrap:active{ outline:none !important; box-shadow:none !important; }
+
+    /* Kart gövdesi: metinler aynı sol hizada */
+    .card-body{ padding:0 16px 12px 16px; display:flex; flex-direction:column; }
+    .card-body > h3,
+    .card-body > .brand-line,
+    .card-body > .meta,
+    .card-body > .desc,
+    .card-body > .price-wrap,
+    .card-body > .btn-row{ margin-left:0 }
+
+    /* Marka satırı: bold değil */
+    .brand-line{margin-top:6px;color:#334155;font-size:14px}
+    .brand-label{font-weight:400;margin-right:6px}
+
+    /* Meta (Cinsi & DMO Kodu) */
+    .meta{list-style:none;padding:0;margin:8px 0 0;display:grid;gap:4px}
+    .meta li{font-size:14px;color:#475569}
+    .meta .label{font-weight:400;color:#475569;margin-right:6px}
+    .meta .emph{font-weight:700;color:#0f172a}
+    .meta .code{
+      font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
+      font-weight:700
+    }
+
+    /* Açıklama */
+    .desc{
+      margin-top:6px;color:#64748b;font-size:14px;
+      display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden
+    }
+
+    /* Fiyat */
+    .price-main{margin-top:10px;font-weight:800;font-size:22px;color:#0f172a}
+    .price-sub{margin-top:2px;color:#64748b;font-size:13px}
+
+    /* Buton sağda */
+    .btn-row{display:flex;justify-content:flex-end;margin-top:12px}
+
+    /* Modal tipografi */
+    .md-row{margin:2px 0;color:#475569}
+    .md-row .label{font-weight:400;margin-right:6px}
+    .md-row .code{
+      font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
+      font-weight:700
+    }
+    .md-price-main{font-weight:800;font-size:22px;margin:6px 0}
+    .md-price-sub{color:#64748b}
   </style>
 </head>
 <body>
@@ -34,10 +92,10 @@
   <!-- MAIN -->
   <main class="section">
     <div class="container">
-      <h1 class="pg-title">Product Gallery</h1>
+      <h1 class="pg-title">DMO ÜRÜN LİSTESİ</h1>
 
       <div class="searchbar">
-        <input id="searchInput" type="search" placeholder="Ürün adı veya marka ara..." aria-label="Ürün ara">
+        <input id="searchInput" type="search" placeholder="Ürün adı, marka, cinsi veya DMO kodu ara..." aria-label="Ürün ara">
       </div>
 
       <div id="productGrid" class="product-grid" aria-live="polite"></div>
@@ -70,7 +128,12 @@
         <div class="viewer"><img id="modalMain" alt=""></div>
         <div id="thumbs" class="thumbs"></div>
         <div class="modal__meta">
-          <p id="modalBrand" class="brand"></p>
+          <p id="modalBrand" class="md-row"></p>
+          <p id="modalType"  class="md-row"></p>
+          <p id="modalDmoCode" class="md-row"></p>
+          <p id="modalPrice" class="md-price-main"></p>
+          <p id="modalPriceSub" class="md-price-sub"></p>
+          <p id="modalDesc" class="desc" style="-webkit-line-clamp:unset;"></p>
           <a id="modalDmo" class="btn btn--dmo" href="#" target="_blank" rel="noopener" hidden>DMO’ya Git</a>
         </div>
       </div>
@@ -78,29 +141,22 @@
   </div>
 
   <script>
-    // Footer yılı
     document.getElementById('yil').textContent = new Date().getFullYear();
 
-    /* ======= Google Sheets (CSV) ======= */
+    /* ====== Google Sheets (CSV) ====== */
     const SHEET_ID  = "1RtHLgzmaAsjNfQM79b5jy4kkaRbPFdMznbO3kktr3Ng";
-    const SHEET_GID = "0"; // ilk sekme
+    const SHEET_GID = "0";
     const CSV_URL   = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=${SHEET_GID}`;
 
-    // GENEL normalize (tarayıcı uyumlu) + Türkçe düzeltmeleri
     function normalize(s){
-      return (s||"")
-        .toString()
-        .replace(/\u00A0/g,' ')       // NBSP -> boşluk
-        .trim()
-        .replace(/\s+/g,' ')
-        .toLowerCase()
-        .normalize('NFD')
-        .replace(/[\u0300-\u036f]/g,'') // diacritics temizle
-        .replace(/ı/g,'i')              // TR özel: ı -> i
-        .replace(/İ/g,'i');             // nadiren kalan büyük İ
+      return (s||"").toString()
+        .replace(/\u00A0/g,' ')
+        .trim().replace(/\s+/g,' ')
+        .toLowerCase().normalize('NFD')
+        .replace(/[\u0300-\u036f]/g,'')
+        .replace(/ı/g,'i').replace(/İ/g,'i');
     }
 
-    // Basit CSV ayrıştırıcı (tırnaklı alan destekli)
     function parseCSV(text){
       const rows=[]; let row=[], val="", inQ=false;
       for(let i=0;i<text.length;i++){
@@ -113,99 +169,125 @@
           if(ch=='"'){ inQ=true; }
           else if(ch==','){ row.push(val); val=""; }
           else if(ch=='\n'){ row.push(val); rows.push(row); row=[]; val=""; }
-          else if(ch=='\r'){ /* ignore */ }
+          else if(ch=='\r'){ }
           else { val+=ch; }
         }
       }
       row.push(val); rows.push(row);
-      return rows.filter(r => r.some(c => normalize(c)!==""));
+      return rows.filter(r=>r.some(c=>normalize(c)!==""));
     }
 
-    // Senin başlıklarına göre tespit
     function detectColumns(headers){
-      const H = headers.map(normalize);
-      // "ürün adı" artık "urun adi"ya normalize olur (ı -> i)
-      const title = H.findIndex(h => h === "urun adi");
-      const brand = H.findIndex(h => h === "marka");
-      const dmo   = H.findIndex(h => h === "dmo link");
-      const photos = [];
-      H.forEach((h,i)=>{ if(h.startsWith("foto")) photos.push(i); });
-      return { title, brand, dmo, photos };
+      const H=headers.map(normalize);
+      const hasAll=(h,subs)=>subs.every(s=>h.includes(s));
+      const find=(cands)=>{
+        for(const cand of cands){
+          for(let i=0;i<H.length;i++){
+            const h=H[i];
+            if(Array.isArray(cand)?hasAll(h,cand):(h===cand||h.includes(cand))) return i;
+          }
+        }
+        return -1;
+      };
+      const title   = find([["urun","ad"],["urun","adi"],["urun","baslik"],"title","product"]);
+      const brand   = find(["marka","brand","uretici","manufacturer"]);
+      const type    = find(["cinsi","tur","tür"]);
+      const desc    = find(["urun aciklama","aciklama","açiklama","aciklamasi","açiklamasi"]);
+      const dmoCode = find([["dmo","kod"],["dmo","kodu"]]);
+      const price   = find([["fiyat"],["price"]]);
+      const priceKdv= find([["kdv","dahil"],["fiyat","kdv"],["vat","incl"],["kdv","dahili"]]);
+      const dmoLink = find([["dmo","link"],["dmo","url"],["dmo","baglanti"]]);
+
+      const photos=[];
+      H.forEach((h,i)=>{ if(h.startsWith("foto")||h.startsWith("resim")||h.startsWith("image")) photos.push(i); });
+
+      return { title, brand, type, desc, dmoCode, price, priceKdv, dmoLink, photos };
     }
+
+    const fmtTRY = v=>{
+      const num=Number(String(v).replace(/[^\d.,-]/g,'').replace(',','.'));
+      if(!isFinite(num)) return "";
+      return new Intl.NumberFormat('tr-TR',{style:'currency',currency:'TRY',maximumFractionDigits:2}).format(num);
+    };
+    const short=(t,n=180)=>!t?"":(String(t).trim().length>n?String(t).trim().slice(0,n-1)+"…":String(t).trim());
 
     async function fetchCSV(){
-      const r = await fetch(CSV_URL, {cache:"no-store"});
-      if(!r.ok) throw new Error("CSV HTTP " + r.status);
-      const rows = parseCSV(await r.text());
+      const r=await fetch(CSV_URL,{cache:"no-store"});
+      if(!r.ok) throw new Error("CSV HTTP "+r.status);
+      const rows=parseCSV(await r.text());
       if(!rows.length) return [];
-
-      const idx = detectColumns(rows[0]);
-      if(idx.title < 0) throw new Error('Başlık kolonu ("Ürün Adı") bulunamadı');
+      const idx=detectColumns(rows[0]);
+      if(idx.title<0) throw new Error('Başlık kolonu ("Ürün Adı" / "Ürün Başlığı") bulunamadı');
 
       const items=[];
       for(let i=1;i<rows.length;i++){
-        const c = rows[i];
-        const title = (c[idx.title] || "").toString().trim();
-        if(!title) continue;
-        const brand = idx.brand>=0 ? (c[idx.brand] || "").toString().trim() : "";
-        const dmo   = idx.dmo  >=0 ? (c[idx.dmo]   || "").toString().trim() : "";
+        const c=rows[i];
+        const title=(c[idx.title]||"").toString().trim(); if(!title) continue;
+        const brand=idx.brand>=0?(c[idx.brand]||"").toString().trim():"";
+        const type =idx.type >=0?(c[idx.type ]||"").toString().trim():"";
+        const desc =idx.desc >=0?(c[idx.desc ]||"").toString().trim():"";
+        const dmoCode=idx.dmoCode>=0?(c[idx.dmoCode]||"").toString().trim():"";
+        const price  =idx.price  >=0?(c[idx.price]  ||"").toString().trim():"";
+        const priceKdv=idx.priceKdv>=0?(c[idx.priceKdv]||"").toString().trim():"";
+        const dmo   =idx.dmoLink>=0?(c[idx.dmoLink]||"").toString().trim():"";
+
         const photos=[];
-        for(const pi of idx.photos){
-          const v = (c[pi]||"").toString().trim();
-          if(v) photos.push(v);
-        }
-        items.push({title, brand, dmo, photos});
+        for(const pi of idx.photos){ const v=(c[pi]||"").toString().trim(); if(v) photos.push(v); }
+        items.push({title,brand,type,desc,dmoCode,price,priceKdv,dmo,photos});
       }
       return items;
     }
 
-    // RENDER
     function renderProducts(items){
-      const grid  = document.getElementById("productGrid");
-      const empty = document.getElementById("productEmpty");
-      grid.innerHTML = "";
-      if(!items.length){ empty.hidden=false; return; }
-      empty.hidden = true;
+      const grid=document.getElementById("productGrid");
+      const empty=document.getElementById("productEmpty");
+      grid.innerHTML=""; if(!items.length){empty.hidden=false;return;} empty.hidden=true;
 
-      const frag = document.createDocumentFragment();
+      const frag=document.createDocumentFragment();
       items.forEach(it=>{
-        const card = document.createElement("article");
-        card.className = "product-card";
+        const card=document.createElement("article");
+        card.className="product-card";
 
-        const imgBtn = document.createElement("button");
-        imgBtn.type = "button";
-        imgBtn.className = "imgwrap";
-        imgBtn.title = "Görselleri aç";
-        imgBtn.setAttribute("aria-label","Görselleri aç");
-        const first = (it.photos && it.photos[0]) || "";
-        if(first){
-          const img = document.createElement("img");
-          img.src = first; img.alt = it.title; img.loading="lazy";
-          imgBtn.appendChild(img);
-        }else{
-          imgBtn.classList.add("noimg");
-          imgBtn.textContent = "No Image";
-        }
-        imgBtn.addEventListener("click", ()=>openGallery(it));
+        const imgBtn=document.createElement("button");
+        imgBtn.type="button"; imgBtn.className="imgwrap";
+        imgBtn.title="Görselleri aç"; imgBtn.setAttribute("aria-label","Görselleri aç");
+        const first=(it.photos&&it.photos[0])||"";
+        if(first){ const img=document.createElement("img"); img.src=first; img.alt=it.title; img.loading="lazy"; imgBtn.appendChild(img); }
+        else { imgBtn.classList.add("noimg"); imgBtn.textContent="No Image"; }
+        imgBtn.addEventListener("click",()=>openGallery(it));
         card.appendChild(imgBtn);
 
-        const h3 = document.createElement("h3");
-        h3.textContent = it.title;
-        card.appendChild(h3);
+        const body=document.createElement("div"); body.className="card-body"; card.appendChild(body);
+
+        const h3=document.createElement("h3"); h3.textContent=it.title; body.appendChild(h3);
 
         if(it.brand){
-          const p = document.createElement("p");
-          p.className = "brand";
-          p.innerHTML = `<strong>Marka:</strong> ${it.brand.toUpperCase()}`;
-          card.appendChild(p);
+          const p=document.createElement("p"); p.className="brand-line";
+          p.innerHTML=`<span class="brand-label">Marka:</span>${it.brand}`; body.appendChild(p);
+        }
+
+        const ul=document.createElement("ul"); ul.className="meta";
+        if(it.type)    ul.innerHTML+=`<li><span class="label">Cinsi:</span><span class="emph">${it.type}</span></li>`;
+        if(it.dmoCode) ul.innerHTML+=`<li><span class="label">DMO Kodu:</span><span class="code">${it.dmoCode}</span></li>`;
+        body.appendChild(ul);
+
+        if(it.desc){ const p=document.createElement("p"); p.className="desc"; p.textContent=short(it.desc); body.appendChild(p); }
+
+        if(it.price||it.priceKdv){
+          const f1=it.price?fmtTRY(it.price):""; const f2=it.priceKdv?fmtTRY(it.priceKdv):"";
+          if(f1||f2){
+            const wrap=document.createElement("div"); wrap.className="price-wrap";
+            if(f1) wrap.innerHTML+=`<div class="price-main">${f1}</div>`;
+            if(f2) wrap.innerHTML+=`<div class="price-sub">KDV Dahil: ${f2}</div>`;
+            body.appendChild(wrap);
+          }
         }
 
         if(it.dmo){
-          const a = document.createElement("a");
-          a.href = it.dmo; a.target = "_blank"; a.rel="noopener";
-          a.className = "btn btn--dmo";
-          a.textContent = "DMO’ya Git";
-          card.appendChild(a);
+          const row=document.createElement("div"); row.className="btn-row";
+          const a=document.createElement("a"); a.href=it.dmo; a.target="_blank"; a.rel="noopener";
+          a.className="btn btn--dmo"; a.textContent="DMO’ya Git"; row.appendChild(a);
+          body.appendChild(row);
         }
 
         frag.appendChild(card);
@@ -214,63 +296,65 @@
     }
 
     function wireSearch(items){
-      const input = document.getElementById("searchInput");
-      input.addEventListener("input", ()=>{
-        const q = input.value.trim().toLowerCase();
-        const f = !q ? items : items.filter(it =>
+      const input=document.getElementById("searchInput");
+      input.addEventListener("input",()=>{
+        const q=input.value.trim().toLowerCase();
+        const f=!q?items:items.filter(it =>
           it.title.toLowerCase().includes(q) ||
-          (it.brand||"").toLowerCase().includes(q)
+          (it.brand||"").toLowerCase().includes(q) ||
+          (it.type||"").toLowerCase().includes(q) ||
+          (it.dmoCode||"").toLowerCase().includes(q)
         );
         renderProducts(f);
       });
     }
 
-    // MODAL
-    const overlay   = document.getElementById("galleryOverlay");
-    const modalMain = document.getElementById("modalMain");
-    const modalTtl  = document.getElementById("modalTitle");
-    const modalBrd  = document.getElementById("modalBrand");
-    const modalDmo  = document.getElementById("modalDmo");
-    const thumbsEl  = document.getElementById("thumbs");
-    const btnClose  = document.getElementById("modalClose");
+    /* ===== Modal ===== */
+    const overlay=document.getElementById("galleryOverlay");
+    const modalMain=document.getElementById("modalMain");
+    const modalTtl=document.getElementById("modalTitle");
+    const modalBrand=document.getElementById("modalBrand");
+    const modalType=document.getElementById("modalType");
+    const modalDmoCode=document.getElementById("modalDmoCode");
+    const modalPrice=document.getElementById("modalPrice");
+    const modalPriceSub=document.getElementById("modalPriceSub");
+    const modalDesc=document.getElementById("modalDesc");
+    const modalDmo=document.getElementById("modalDmo");
+    const thumbsEl=document.getElementById("thumbs");
+    const btnClose=document.getElementById("modalClose");
 
-    function openOverlay(){
-      overlay.classList.add("is-open");
-      overlay.removeAttribute("hidden");
-      document.body.style.overflow="hidden";
-    }
-    function closeGallery(){
-      overlay.classList.remove("is-open");
-      overlay.setAttribute("hidden","");
-      document.body.style.overflow="";
-    }
+    function openOverlay(){ overlay.classList.add("is-open"); overlay.removeAttribute("hidden"); document.body.style.overflow="hidden"; }
+    function closeGallery(){ overlay.classList.remove("is-open"); overlay.setAttribute("hidden",""); document.body.style.overflow=""; }
 
     function openGallery(item){
-      modalTtl.textContent = item.title;
-      modalBrd.textContent = item.brand ? `Marka: ${item.brand}` : "";
+      modalTtl.textContent=item.title;
+      modalBrand.innerHTML=item.brand?`<span class="label">Marka:</span>${item.brand}`:"";
+      modalType.innerHTML=item.type?`<span class="label">Cinsi:</span><span class="emph">${item.type}</span>`:"";
+      modalDmoCode.innerHTML=item.dmoCode?`<span class="label">DMO Kodu:</span><span class="code">${item.dmoCode}</span>`:"";
+
+      const f1=item.price?fmtTRY(item.price):""; const f2=item.priceKdv?fmtTRY(item.priceKdv):"";
+      modalPrice.textContent=f1||""; modalPriceSub.textContent=f2?`KDV Dahil: ${f2}`:"";
+      modalDesc.textContent=item.desc||"";
       if(item.dmo){ modalDmo.href=item.dmo; modalDmo.hidden=false; } else { modalDmo.hidden=true; }
 
-      thumbsEl.innerHTML = "";
-      const photos = (item.photos||[]).filter(Boolean);
+      thumbsEl.innerHTML="";
+      const photos=(item.photos||[]).filter(Boolean);
       if(photos.length){
-        setMain(photos[0], null);
+        setMain(photos[0],null);
         photos.forEach(src=>{
-          const t=document.createElement("button");
-          t.type="button"; t.className="thumb";
-          t.innerHTML=`<img src="${src}" alt="">`;
-          t.addEventListener("click",()=>setMain(src,t));
+          const t=document.createElement("button"); t.type="button"; t.className="thumb";
+          t.innerHTML=`<img src="${src}" alt="">`; t.addEventListener("click",()=>setMain(src,t));
           thumbsEl.appendChild(t);
         });
         if(thumbsEl.firstElementChild) thumbsEl.firstElementChild.classList.add("active");
       }else{
-        setMain("", null);
-        thumbsEl.innerHTML = '<div class="thumb thumb--empty">Fotoğraf yok</div>';
+        setMain("",null); thumbsEl.innerHTML='<div class="thumb thumb--empty">Fotoğraf yok</div>';
       }
       openOverlay();
     }
 
-    function setMain(src, btn){
-      if(src){ modalMain.src = src; modalMain.alt = "Ürün görseli"; }
+    function setMain(src,btn){
+      if(src){ modalMain.src=src; modalMain.alt="Ürün görseli"; }
       else   { modalMain.removeAttribute("src"); modalMain.alt=""; }
       Array.prototype.forEach.call(thumbsEl.children, el=>el.classList.remove("active"));
       if(btn) btn.classList.add("active");
@@ -280,23 +364,16 @@
     overlay.addEventListener("click", e=>{ if(e.target===overlay) closeGallery(); });
     document.addEventListener("keydown", e=>{ if(!overlay.hidden && e.key==="Escape") closeGallery(); });
 
-    // BAŞLAT
     (async function init(){
       try{
-        const items = await fetchCSV();
+        const items=await fetchCSV();
         renderProducts(items);
         wireSearch(items);
       }catch(err){
         console.error(err);
         const dbg=document.getElementById("debugBox");
         dbg.hidden=false;
-        dbg.innerHTML = `
-          Ürünler yüklenemedi.<br>
-          <small style="color:#6b7280">Hata: ${String(err.message||err).replace(/</g,'&lt;')}</small>
-          <div style="margin-top:6px">
-            <a target="_blank" href="${CSV_URL}">CSV test</a>
-          </div>
-        `;
+        dbg.innerHTML=`Ürünler yüklenemedi.<br><small style="color:#6b7280">Hata: ${String(err.message||err).replace(/</g,'&lt;')}</small><div style="margin-top:6px"><a target="_blank" href="${CSV_URL}">CSV test</a></div>`;
         document.getElementById("productEmpty").hidden=false;
       }
     })();
