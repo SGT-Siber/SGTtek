@@ -170,3 +170,22 @@
   align-self:flex-end;
   margin-top:auto;           /* içeriğin altına ittir */
 }
+
+/* Başlık & arama ortalama (zaten varsa override eder) */
+.pg-title{ text-align:center; margin:0 0 12px }
+.searchbar{ display:flex; justify-content:center; margin:12px 0 16px }
+.searchbar input{ width:100%; max-width:680px; border-radius:12px }
+
+/* Araç çubuğu (sıralama + sayfa boyutu) */
+.toolbar{ display:flex; justify-content:flex-end; gap:12px; margin:8px 0 12px }
+.tool{ display:inline-flex; align-items:center; gap:8px; font-size:14px; color:#475569 }
+.tool select{ padding:8px 10px; border:1px solid #e5e7eb; border-radius:10px; background:#fff }
+
+/* Pager */
+.pager{ display:flex; justify-content:center; gap:8px; margin:18px 0 4px }
+.page-btn{ padding:8px 12px; border:1px solid #e5e7eb; background:#fff; border-radius:10px; cursor:pointer }
+.page-btn.is-active{ background:#0B5FFF; color:#fff; border-color:#0B5FFF }
+.page-btn:disabled{ opacity:.5; cursor:not-allowed }
+
+/* Modal – görsel tıklanabilir göstergesi */
+.viewer{ cursor:pointer }
