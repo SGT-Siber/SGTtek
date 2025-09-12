@@ -6,56 +6,84 @@
   <title>SGTEK – Kurumlar için Teknoloji ve Güvenlik</title>
   <meta name="description" content="DMO onaylı ürünler ve siber güvenlik hizmetleri">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header class="header">
-  <div class="container header__inner">
-    <a class="brand" href="index.html" aria-label="SGTEK Ana Sayfa">
-      <img src="img/sgtlogo.png" alt="SGTEK logo">
-    </a>
-    <nav class="nav" aria-label="Ana menü">
-      <a href="hakkimizda.html" target="_blank" rel="noopener">Hakkımızda</a>
-      <a href="referanslar.html" target="_blank" rel="noopener">Referanslar</a>
-      <a href="blog.html" target="_blank" rel="noopener">Haberler</a>
-      <a href="iletisim.html" target="_blank" rel="noopener">İletişim</a>
-      <a class="btn btn--primary" href="urunler.html" target="_blank" rel="noopener">Ürünler</a>
-    </nav>
-  </div>
-</header>
+  <!-- HEADER -->
+  <header class="header">
+    <div class="container header__inner">
+      <a class="brand" href="index.html" aria-label="SGTEK Ana Sayfa">
+        <img src="img/sgtlogo.png" alt="SGTEK logo">
+      </a>
+      <nav class="nav" aria-label="Ana menü">
+        <a href="#urunler">Ürünler</a>
+        <a href="#hakkimizda">Hakkımızda</a>
+        <a href="#iletisim">İletişim</a>
+      </nav>
+    </div>
+  </header>
 
-<main id="icerik">
-  <!-- ORTA GÖRSEL (sayfa ortası) -->
-  <section class="center-visual" role="region" aria-label="Tanıtım görseli">
-    <div class="container">
-      <img src="img/center.jpg" alt="SGTEK tanıtım görseli" class="center-visual__img">
+  <!-- HERO -->
+  <section class="hero" role="region" aria-label="Karşılama">
+    <div class="hero__bg">
+      <img src="img/center.png" alt="Teknoloji arka plan">
+    </div>
+    <div class="container hero__content">
+      <h1>Precision Technology for Public Sector</h1>
+      <p>DMO onaylı donanım tedariki • Güvenilir siber güvenlik hizmetleri</p>
+      <a class="btn btn--cta" href="#urunler">Ürünleri Gör</a>
     </div>
   </section>
 
-  <!-- HİZMETLER (altta basit liste) -->
-  <section id="hizmetler" class="section section--alt">
+  <!-- ABOUT CARD -->
+  <section id="hakkimizda" class="section">
     <div class="container">
-      <h2>Hizmetler</h2>
-      <ul class="services">
-        <li><strong>Donanım Tedarik</strong> – DMO onaylı bilgisayar, monitör ve yazıcılar.</li>
-        <li><strong>Siber Güvenlik</strong> – Ağ güvenliği, risk analizi ve danışmanlık.</li>
-        <li><strong>Bakım &amp; Destek</strong> – Kurulum, garanti ve teknik destek.</li>
+      <div class="card about">
+        <div class="about__text">
+          <h2>SGTEK Hakkında</h2>
+          <p>SGTEK, kamu kurumları için DMO onaylı bilgisayar, monitör ve yazıcı tedariki ile kurumlara yönelik siber güvenlik hizmetleri sunar. Kalite, hız ve güvenilirlik odaklı yaklaşımımızla; seçim, teslimat ve destek süreçlerinde yanınızdayız.</p>
+          <p>Deneyimli ekibimiz ürünleri titizlikle seçer, test eder ve zamanında ulaştırır. Uzun vadeli müşteri memnuniyeti için şeffaf iletişim ve hızlı destek sağlarız.</p>
+        </div>
+        <div class="about__media">
+          <img src="img/about.jpg" alt="Endüstriyel üretim bandı görseli">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRODUCTS PLACEHOLDER (anchor only) -->
+  <section id="urunler" class="section section--alt">
+    <div class="container">
+      <h2>Ürünler</h2>
+      <p>Yakında: DMO ürün kataloğu (Google Sheets bağlantılı ayrı sayfa).</p>
+      <a class="btn" href="urunler.html" target="_blank" rel="noopener">Örnek Ürün Sayfasını Aç</a>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="iletisim" class="section">
+    <div class="container contact">
+      <h2>İletişim</h2>
+      <ul>
+        <li><strong>E‑posta:</strong> info@sgtek.com.tr</li>
+        <li><strong>Telefon:</strong> +90 312 000 00 00</li>
+        <li><strong>Adres:</strong> Örnek Mah. SGTEK Plaza No:1, Ankara</li>
       </ul>
     </div>
   </section>
-</main>
 
-<footer class="footer">
-  <div class="container footer__inner">
-    <p>© <span id="yil"></span> SGTEK – Tüm Hakları Saklıdır</p>
-    <nav class="footer__nav">
-      <a href="#icerik">Başa Dön</a>
-      <a href="kvkk.html" target="_blank" rel="noopener">KVKK</a>
-      <a href="gizlilik.html" target="_blank" rel="noopener">Gizlilik</a>
-    </nav>
-  </div>
-</footer>
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <p>© <span id="yil"></span> SGTEK</p>
+      <nav class="footer__nav">
+        <a href="#hakkimizda">Hakkımızda</a>
+        <a href="#">KVKK</a>
+        <a href="#">Gizlilik</a>
+      </nav>
+    </div>
+  </footer>
 
 <script>
   document.getElementById('yil').textContent = new Date().getFullYear();
