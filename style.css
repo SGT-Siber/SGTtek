@@ -1,8 +1,7 @@
-/* Boyntoy örneğine yakın: hero banner + card tasarım */
 :root{
   --primary:#0B5FFF;
   --primary-dark:#0A2A6A;
-  --accent:#F97316; /* CTA turuncu */
+  --accent:#F97316; /* Turuncu CTA */
   --bg:#f5f7fb;
   --text:#1f2937;
   --card:#ffffff;
@@ -46,7 +45,7 @@ h2{color:#0f172a;margin:0 0 12px}
 .about__media img{width:100%;height:auto;border-radius:12px;display:block}
 
 /* CONTACT */
-.contact ul{list-style: none; padding-left:0}
+.contact ul{list-style:none;padding-left:0}
 .contact li{margin:8px 0}
 
 /* FOOTER */
