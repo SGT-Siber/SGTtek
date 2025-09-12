@@ -7,70 +7,6 @@
   <meta name="description" content="DMO onaylı ürünler kataloğu">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/urunler.css">
-  <style>
-    [hidden]{display:none!important}
-    .overlay{display:none}
-    .overlay.is-open{display:grid}
-    .pg-title{letter-spacing:.5px}
-
-    /* Kart + görsel buton (siyah çizgi/outline kaldırıldı) */
-    .product-card{display:flex;flex-direction:column;align-items:stretch;overflow:hidden}
-    .imgwrap{
-      margin-bottom:0;
-      border:0; background:transparent;
-      appearance:none; -webkit-appearance:none; -moz-appearance:none;
-      padding:0; cursor:pointer;
-    }
-    .imgwrap:focus,
-    .imgwrap:focus-visible,
-    .imgwrap:active{ outline:none !important; box-shadow:none !important; }
-
-    /* Kart gövdesi: metinler aynı sol hizada */
-    .card-body{ padding:0 16px 12px 16px; display:flex; flex-direction:column; }
-    .card-body > h3,
-    .card-body > .brand-line,
-    .card-body > .meta,
-    .card-body > .desc,
-    .card-body > .price-wrap,
-    .card-body > .btn-row{ margin-left:0 }
-
-    /* Marka satırı: bold değil */
-    .brand-line{margin-top:6px;color:#334155;font-size:14px}
-    .brand-label{font-weight:400;margin-right:6px}
-
-    /* Meta (Cinsi & DMO Kodu) */
-    .meta{list-style:none;padding:0;margin:8px 0 0;display:grid;gap:4px}
-    .meta li{font-size:14px;color:#475569}
-    .meta .label{font-weight:400;color:#475569;margin-right:6px}
-    .meta .emph{font-weight:700;color:#0f172a}
-    .meta .code{
-      font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
-      font-weight:700
-    }
-
-    /* Açıklama */
-    .desc{
-      margin-top:6px;color:#64748b;font-size:14px;
-      display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden
-    }
-
-    /* Fiyat */
-    .price-main{margin-top:10px;font-weight:800;font-size:22px;color:#0f172a}
-    .price-sub{margin-top:2px;color:#64748b;font-size:13px}
-
-    /* Buton sağda */
-    .btn-row{display:flex;justify-content:flex-end;margin-top:12px}
-
-    /* Modal tipografi */
-    .md-row{margin:2px 0;color:#475569}
-    .md-row .label{font-weight:400;margin-right:6px}
-    .md-row .code{
-      font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
-      font-weight:700
-    }
-    .md-price-main{font-weight:800;font-size:22px;margin:6px 0}
-    .md-price-sub{color:#64748b}
-  </style>
 </head>
 <body>
   <!-- HEADER -->
@@ -323,8 +259,16 @@
     const thumbsEl=document.getElementById("thumbs");
     const btnClose=document.getElementById("modalClose");
 
-    function openOverlay(){ overlay.classList.add("is-open"); overlay.removeAttribute("hidden"); document.body.style.overflow="hidden"; }
-    function closeGallery(){ overlay.classList.remove("is-open"); overlay.setAttribute("hidden",""); document.body.style.overflow=""; }
+    function openOverlay(){
+      overlay.classList.add("is-open");
+      overlay.removeAttribute("hidden");
+      document.body.style.overflow="hidden";
+    }
+    function closeGallery(){
+      overlay.classList.remove("is-open");
+      overlay.setAttribute("hidden","");
+      document.body.style.overflow="";
+    }
 
     function openGallery(item){
       modalTtl.textContent=item.title;
@@ -332,8 +276,10 @@
       modalType.innerHTML=item.type?`<span class="label">Cinsi:</span><span class="emph">${item.type}</span>`:"";
       modalDmoCode.innerHTML=item.dmoCode?`<span class="label">DMO Kodu:</span><span class="code">${item.dmoCode}</span>`:"";
 
-      const f1=item.price?fmtTRY(item.price):""; const f2=item.priceKdv?fmtTRY(item.priceKdv):"";
-      modalPrice.textContent=f1||""; modalPriceSub.textContent=f2?`KDV Dahil: ${f2}`:"";
+      const f1=item.price?fmtTRY(item.price):"";
+      const f2=item.priceKdv?fmtTRY(item.priceKdv):"";
+      modalPrice.textContent=f1||"";
+      modalPriceSub.textContent=f2?`KDV Dahil: ${f2}`:"";
       modalDesc.textContent=item.desc||"";
       if(item.dmo){ modalDmo.href=item.dmo; modalDmo.hidden=false; } else { modalDmo.hidden=true; }
 
@@ -342,13 +288,16 @@
       if(photos.length){
         setMain(photos[0],null);
         photos.forEach(src=>{
-          const t=document.createElement("button"); t.type="button"; t.className="thumb";
-          t.innerHTML=`<img src="${src}" alt="">`; t.addEventListener("click",()=>setMain(src,t));
+          const t=document.createElement("button");
+          t.type="button"; t.className="thumb";
+          t.innerHTML=`<img src="${src}" alt="">`;
+          t.addEventListener("click",()=>setMain(src,t));
           thumbsEl.appendChild(t);
         });
         if(thumbsEl.firstElementChild) thumbsEl.firstElementChild.classList.add("active");
       }else{
-        setMain("",null); thumbsEl.innerHTML='<div class="thumb thumb--empty">Fotoğraf yok</div>';
+        setMain("",null);
+        thumbsEl.innerHTML='<div class="thumb thumb--empty">Fotoğraf yok</div>';
       }
       openOverlay();
     }

@@ -99,3 +99,74 @@
 }
 .md-price-main{ font-weight:800; font-size:22px; margin:6px 0; }
 .md-price-sub{ color:#64748b; }
+
+/* Başlık ve arama kutusunu ortala */
+.pg-title{
+  text-align: center;
+  margin: 0 0 12px;
+}
+
+.searchbar{
+  display: flex;
+  justify-content: center;   /* ortala */
+  margin: 12px 0 24px;
+}
+
+.searchbar input{
+  width: 100%;
+  max-width: 680px;          /* arama kutusu genişliği */
+  border-radius: 12px;
+}
+
+/* ===== Modal – düzen düzeltmeleri ===== */
+
+/* Kaplama açıkken */
+.overlay{position:fixed;inset:0;display:none;place-items:center;padding:24px;background:rgba(15,23,42,.6);z-index:9999}
+.overlay.is-open{display:grid}
+
+/* Modal kutu */
+.modal{width:min(100%, 980px);max-height:90vh;background:#fff;border-radius:16px;overflow:auto;box-shadow:0 24px 64px rgba(0,0,0,.25)}
+.modal__hdr{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid #e5e7eb}
+.modal__close{border:0;background:transparent;cursor:pointer;font-size:24px;line-height:1}
+
+/* --- Yeni grid: solda görüntü bloğu (viewer+thumbs), sağda bilgi --- */
+.modal__main{
+  display:grid;
+  grid-template-columns: minmax(0,1fr) 340px; /* sol - sağ */
+  grid-template-rows: auto auto;              /* viewer, thumbs */
+  gap:16px;
+  padding:16px;
+}
+
+/* Büyük görsel */
+.viewer{
+  grid-column:1; grid-row:1;
+  display:flex;align-items:center;justify-content:center;
+  min-height:360px;background:#f8fafc;border:1px solid #e5e7eb;border-radius:8px;
+}
+.viewer img{max-width:100%;max-height:70vh;object-fit:contain}
+
+/* Thumbs: viewer’ın ALTINDA yatay şerit */
+.thumbs{
+  grid-column:1; grid-row:2;
+  display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;
+}
+.thumb{border:1px solid #e5e7eb;border-radius:10px;padding:4px;background:#fff;cursor:pointer;flex:0 0 auto}
+.thumb img{display:block;height:72px;width:auto}
+.thumb.active{outline:2px solid #0B5FFF}
+
+/* Sağdaki bilgi sütunu */
+.modal__meta{
+  grid-column:2; grid-row:1 / span 2;
+  display:flex;flex-direction:column;gap:8px;
+}
+.md-row{margin:2px 0;color:#475569}
+.md-row .label{font-weight:400;margin-right:6px}
+.md-price-main{font-weight:800;font-size:22px;margin:6px 0}
+.md-price-sub{color:#64748b}
+
+/* DMO butonu sağ altta sabit */
+.modal__meta .btn--dmo{
+  align-self:flex-end;
+  margin-top:auto;           /* içeriğin altına ittir */
+}
