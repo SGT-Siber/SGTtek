@@ -189,3 +189,53 @@
 
 /* Modal – görsel tıklanabilir göstergesi */
 .viewer{ cursor:pointer }
+
+/* ===== GALERİ MODAL DÜZENİ (FIX) ===== */
+.overlay{ position:fixed; inset:0; background:rgba(15,23,42,.58); display:none; z-index:50; }
+.overlay.is-open{ display:grid; place-items:center; }
+
+.modal{ width:min(1100px, 96vw); max-height:90vh; overflow:auto; background:#fff; border-radius:14px; padding:12px; }
+.modal__hdr{ display:flex; justify-content:space-between; align-items:center; padding:6px 6px 10px 8px; }
+.modal__close{ border:0; background:#f1f5f9; width:34px; height:34px; border-radius:10px; font-size:18px; cursor:pointer; }
+
+/* Grid: sol = büyük görsel, sağ = thumbs */
+.modal__main{
+  display:grid;
+  grid-template-columns: minmax(360px,1fr) 180px; /* sağ sütun sabit genişlik */
+  align-items:start;
+  gap:12px;
+}
+
+/* Hücre yerleşimleri */
+.viewer{ grid-column:1; grid-row:1; background:#f8fafc; display:flex; align-items:center; justify-content:center; padding:10px; border-radius:10px; }
+.viewer img{ max-height:58vh; width:auto; height:auto; cursor:pointer; }
+
+.thumbs{
+  grid-column:2; grid-row:1;               /* hep sağ sütunda */
+  display:flex; flex-direction:column; gap:10px;
+  max-height:58vh; overflow:auto; padding:4px;
+}
+.thumb{ display:block; width:100%; border:2px solid transparent; border-radius:10px; padding:4px; background:#fff; }
+.thumb img{ width:100%; height:96px; object-fit:contain; display:block; }
+.thumb:focus{ outline:none; }
+.thumb.active{ border-color:#0B5FFF; }
+
+/* Meta bilgileri altta iki sütun boyunca */
+.modal__meta{ grid-column:1 / 3; grid-row:2; margin-top:8px; }
+.md-row{ margin:2px 0; color:#475569; }
+.md-row .label{ font-weight:400; margin-right:6px; }
+.md-row .code{
+  font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
+  font-weight:700;
+}
+.md-price-main{ font-weight:800; font-size:22px; margin:6px 0; }
+.md-price-sub{ color:#64748b; }
+
+/* Dar ekran davranışı */
+@media (max-width: 720px){
+  .modal__main{ grid-template-columns: 1fr; }
+  .viewer{ grid-column:1; grid-row:1; }
+  .thumbs{ grid-column:1; grid-row:2; flex-direction:row; max-height:none; }
+  .thumb{ width:110px; }
+  .modal__meta{ grid-column:1; grid-row:3; }
+}
