@@ -1,0 +1,71 @@
+:root{
+  --primary:#0B5FFF;
+  --primary-dark:#0A2A6A;
+  --accent:#F97316;
+  --bg:#f5f7fb;
+  --text:#1f2937;
+  --card:#ffffff;
+  --muted:#6b7280;
+}
+
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family: 'Segoe UI', sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
+
+.container{max-width:1200px;margin:0 auto;padding:0 20px}
+
+/* HEADER */
+.header{position:sticky;top:0;background:#fff;border-bottom:1px solid #e5e7eb;z-index:20}
+.header__inner{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:80px}
+.brand img{height:80px;display:block}
+.nav{display:flex;gap:24px;font-size:16px;font-weight:500}  /* Menü fontu */
+.nav a{color:var(--text);text-decoration:none}
+.nav a:hover{text-decoration:underline}
+
+/* HERO */
+.hero{position:relative;min-height:320px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.hero__bg{position:absolute;inset:0;filter:blur(4px) brightness(.85)}
+.hero__bg img{width:100%;height:100%;object-fit:cover}
+.hero__content{position:relative;text-align:center;color:#fff;padding:60px 0}
+.hero__content h1{font-size:42px;line-height:1.2;margin:0 0 10px;text-shadow:0 2px 6px rgba(0,0,0,.35)}
+.hero__content p{margin:0 0 18px;font-size:18px;opacity:.95;text-shadow:0 1px 4px rgba(0,0,0,.35)}
+.btn{display:inline-block;padding:12px 18px;border-radius:12px;text-decoration:none;font-weight:700;border:1px solid transparent}
+.btn--cta{background:var(--accent);color:#fff;box-shadow:0 4px 12px rgba(249,115,22,.35)}
+.btn--cta:hover{opacity:.95}
+
+/* SECTIONS */
+.section{padding:48px 0}
+.section--alt{background:#fff}
+h2{color:#0f172a;margin:0 0 12px}
+
+/* ABOUT CARD */
+.card{background:var(--card);border:1px solid #e5e7eb;border-radius:16px;box-shadow:0 10px 20px rgba(0,0,0,.06)}
+.about{display:grid;grid-template-columns:1.2fr 1fr;gap:24px;align-items:center;padding:24px}
+.about__text p{color:var(--muted)}
+.about__media img{width:100%;height:auto;border-radius:12px;display:block}
+
+/* CONTACT (index sürümünde satır içi) */
+.contact-row{
+  display:flex;
+  flex-wrap:wrap;
+  gap:24px;
+  margin-top:16px;
+  font-size:16px;
+  line-height:1.6;
+}
+.contact-row span{white-space:nowrap}
+
+/* FOOTER */
+.footer{background:#fff;border-top:1px solid #e5e7eb}
+.footer__inner{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:72px}
+.footer__nav a{color:var(--text);text-decoration:none;margin-left:12px;font-weight:500}
+.footer__nav a:hover{text-decoration:underline}
+
+@media (max-width:900px){
+  .about{grid-template-columns:1fr}
+  .hero__content h1{font-size:30px}
+}

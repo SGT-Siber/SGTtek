@@ -62,18 +62,3 @@ h2{color:#0f172a;margin:0 0 12px}
   .about{grid-template-columns:1fr}
   .hero__content h1{font-size:30px}
 }
-/* İletişim satırı */
-.contact-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 24px;            /* Elemanlar arası boşluk */
-  margin-top: 16px;
-  font-size: 16px;
-  line-height: 1.6;
-}
-.contact-row span {
-  white-space: nowrap;  /* Satır kırılmadan tek satırda kalır */
-}
-@media (max-width:768px){
-  .contact-row {flex-direction: column; gap:8px;} /* Mobilde alt alta dizilir */
-}
