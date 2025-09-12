@@ -1,7 +1,7 @@
 :root{
   --primary:#0B5FFF;
   --primary-dark:#0A2A6A;
-  --accent:#F97316; /* Turuncu CTA */
+  --accent:#F97316;
   --bg:#f5f7fb;
   --text:#1f2937;
   --card:#ffffff;
@@ -10,16 +10,19 @@
 
 *{box-sizing:border-box}
 html,body{margin:0;padding:0}
-body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text)}
+body{
+  font-family:'Open Sans',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  background:var(--bg);color:var(--text);
+}
 
 .container{max-width:1200px;margin:0 auto;padding:0 20px}
 
 /* HEADER */
 .header{position:sticky;top:0;background:#fff;border-bottom:1px solid #e5e7eb;z-index:20}
-.header__inner{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:64px}
-.brand img{height:40px;display:block}
-.nav{display:flex;gap:18px}
-.nav a{color:var(--text);text-decoration:none;font-weight:500}
+.header__inner{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:80px}
+.brand img{height:80px;display:block}
+.nav{display:flex;gap:24px;font-size:16px}
+.nav a{color:var(--text);text-decoration:none;font-weight:600}
 .nav a:hover{text-decoration:underline}
 
 /* HERO */
@@ -51,7 +54,7 @@ h2{color:#0f172a;margin:0 0 12px}
 /* FOOTER */
 .footer{background:#fff;border-top:1px solid #e5e7eb}
 .footer__inner{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:72px}
-.footer__nav a{color:var(--text);text-decoration:none;margin-left:12px}
+.footer__nav a{color:var(--text);text-decoration:none;margin-left:12px;font-weight:600}
 .footer__nav a:hover{text-decoration:underline}
 
 @media (max-width:900px){
