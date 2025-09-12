@@ -1,92 +1,60 @@
-<!doctype html>
-<html lang="tr">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>SGTEK – Kurumlar için Teknoloji ve Güvenlik</title>
-  <meta name="description" content="DMO onaylı ürünler ve siber güvenlik hizmetleri">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <!-- HEADER -->
-  <header class="header">
-    <div class="container header__inner">
-      <a class="brand" href="index.html" aria-label="SGTEK Ana Sayfa">
-        <img src="img/sgtlogo.png" alt="SGTEK logo">
-      </a>
-      <nav class="nav" aria-label="Ana menü">
-        <a href="#urunler">Ürünler</a>
-        <a href="#hakkimizda">Hakkımızda</a>
-        <a href="#iletisim">İletişim</a>
-      </nav>
-    </div>
-  </header>
+:root{
+  --primary:#0B5FFF;
+  --primary-dark:#0A2A6A;
+  --accent:#F97316; /* Turuncu CTA */
+  --bg:#f5f7fb;
+  --text:#1f2937;
+  --card:#ffffff;
+  --muted:#6b7280;
+}
 
-  <!-- HERO -->
-  <section class="hero" role="region" aria-label="Karşılama">
-    <div class="hero__bg">
-      <img src="img/center.png" alt="Teknoloji arka plan">
-    </div>
-    <div class="container hero__content">
-      <h1>Precision Technology for Public Sector</h1>
-      <p>DMO onaylı donanım tedariki • Güvenilir siber güvenlik hizmetleri</p>
-      <a class="btn btn--cta" href="#urunler">Ürünleri Gör</a>
-    </div>
-  </section>
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text)}
 
-  <!-- ABOUT CARD -->
-  <section id="hakkimizda" class="section">
-    <div class="container">
-      <div class="card about">
-        <div class="about__text">
-          <h2>SGTEK Hakkında</h2>
-          <p>SGTEK, kamu kurumları için DMO onaylı bilgisayar, monitör ve yazıcı tedariki ile kurumlara yönelik siber güvenlik hizmetleri sunar. Kalite, hız ve güvenilirlik odaklı yaklaşımımızla; seçim, teslimat ve destek süreçlerinde yanınızdayız.</p>
-          <p>Deneyimli ekibimiz ürünleri titizlikle seçer, test eder ve zamanında ulaştırır. Uzun vadeli müşteri memnuniyeti için şeffaf iletişim ve hızlı destek sağlarız.</p>
-        </div>
-        <div class="about__media">
-          <img src="img/about.jpg" alt="Endüstriyel üretim bandı görseli">
-        </div>
-      </div>
-    </div>
-  </section>
+.container{max-width:1200px;margin:0 auto;padding:0 20px}
 
-  <!-- PRODUCTS PLACEHOLDER (anchor only) -->
-  <section id="urunler" class="section section--alt">
-    <div class="container">
-      <h2>Ürünler</h2>
-      <p>Yakında: DMO ürün kataloğu (Google Sheets bağlantılı ayrı sayfa).</p>
-      <a class="btn" href="urunler.html" target="_blank" rel="noopener">Örnek Ürün Sayfasını Aç</a>
-    </div>
-  </section>
+/* HEADER */
+.header{position:sticky;top:0;background:#fff;border-bottom:1px solid #e5e7eb;z-index:20}
+.header__inner{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:64px}
+.brand img{height:40px;display:block}
+.nav{display:flex;gap:18px}
+.nav a{color:var(--text);text-decoration:none;font-weight:500}
+.nav a:hover{text-decoration:underline}
 
-  <!-- CONTACT -->
-  <section id="iletisim" class="section">
-    <div class="container contact">
-      <h2>İletişim</h2>
-      <ul>
-        <li><strong>E‑posta:</strong> info@sgtek.com.tr</li>
-        <li><strong>Telefon:</strong> +90 312 000 00 00</li>
-        <li><strong>Adres:</strong> Örnek Mah. SGTEK Plaza No:1, Ankara</li>
-      </ul>
-    </div>
-  </section>
+/* HERO */
+.hero{position:relative;min-height:320px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.hero__bg{position:absolute;inset:0;filter:blur(4px) brightness(.85)}
+.hero__bg img{width:100%;height:100%;object-fit:cover}
+.hero__content{position:relative;text-align:center;color:#fff;padding:60px 0}
+.hero__content h1{font-size:42px;line-height:1.2;margin:0 0 10px;text-shadow:0 2px 6px rgba(0,0,0,.35)}
+.hero__content p{margin:0 0 18px;font-size:18px;opacity:.95;text-shadow:0 1px 4px rgba(0,0,0,.35)}
+.btn{display:inline-block;padding:12px 18px;border-radius:12px;text-decoration:none;font-weight:700;border:1px solid transparent}
+.btn--cta{background:var(--accent);color:#fff;box-shadow:0 4px 12px rgba(249,115,22,.35)}
+.btn--cta:hover{opacity:.95}
 
-  <!-- FOOTER -->
-  <footer class="footer">
-    <div class="container footer__inner">
-      <p>© <span id="yil"></span> SGTEK</p>
-      <nav class="footer__nav">
-        <a href="#hakkimizda">Hakkımızda</a>
-        <a href="#">KVKK</a>
-        <a href="#">Gizlilik</a>
-      </nav>
-    </div>
-  </footer>
+/* SECTIONS */
+.section{padding:48px 0}
+.section--alt{background:#fff}
+h2{color:#0f172a;margin:0 0 12px}
 
-<script>
-  document.getElementById('yil').textContent = new Date().getFullYear();
-</script>
-</body>
-</html>
+/* ABOUT CARD */
+.card{background:var(--card);border:1px solid #e5e7eb;border-radius:16px;box-shadow:0 10px 20px rgba(0,0,0,.06)}
+.about{display:grid;grid-template-columns:1.2fr 1fr;gap:24px;align-items:center;padding:24px}
+.about__text p{color:var(--muted)}
+.about__media img{width:100%;height:auto;border-radius:12px;display:block}
+
+/* CONTACT */
+.contact ul{list-style:none;padding-left:0}
+.contact li{margin:8px 0}
+
+/* FOOTER */
+.footer{background:#fff;border-top:1px solid #e5e7eb}
+.footer__inner{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:72px}
+.footer__nav a{color:var(--text);text-decoration:none;margin-left:12px}
+.footer__nav a:hover{text-decoration:underline}
+
+@media (max-width:900px){
+  .about{grid-template-columns:1fr}
+  .hero__content h1{font-size:30px}
+}
