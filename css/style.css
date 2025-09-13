@@ -69,3 +69,16 @@ h2{color:#0f172a;margin:0 0 12px}
   .about{grid-template-columns:1fr}
   .hero__content h1{font-size:30px}
 }
+
+/* === Kurumsal (About) Modal === */
+.about-overlay{position:fixed; inset:0; background:rgba(15,23,42,.58); display:none; z-index:60;}
+.about-overlay.is-open{display:grid; place-items:center;}
+.about-modal{width:min(900px,96vw); max-height:90vh; overflow:auto; background:#fff; border-radius:16px; box-shadow:0 20px 60px rgba(0,0,0,.25); padding:16px;}
+.about-modal__hdr{display:flex; align-items:center; justify-content:space-between; gap:8px; padding:4px 4px 10px;}
+.about-modal__hdr h2{margin:0; font-size:22px; color:#0f172a;}
+.about-modal__close{border:0; background:#f1f5f9; width:36px; height:36px; border-radius:10px; font-size:20px; cursor:pointer;}
+.about-modal__close:hover{background:#e2e8f0;}
+.about-modal__content{padding:4px 6px 10px; color:#334155; line-height:1.6;}
+.about-modal__content h3{color:#0f172a; margin:14px 0 6px; font-size:18px;}
+.about-modal__content ul{margin:8px 0 12px 18px;}
+.about-cta{margin-top:14px; display:flex; justify-content:flex-end;}

@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>SGTEK – Kurumlar için Teknoloji ve Güvenlik</title>
   <meta name="description" content="DMO onaylı ürünler ve siber güvenlik hizmetleri">
-  <!-- Google Font: Open Sans -->
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 </head>
@@ -18,9 +17,9 @@
       </a>
       <nav class="nav" aria-label="Ana menü">
         <a href="index.html">Ana Sayfa</a>
-        <a href="Kurumsal">Kurumsal</a>
+        <a href="#kurumsal" id="openAbout">Kurumsal</a>
         <a href="Siber Güvenlik">Siber Güvenlik</a>
-        <a href="#urunler">Ürünler</a>
+        <a href="urunler.html">Ürünler</a>
         <a href="#iletisim">İletişim</a>
       </nav>
     </div>
@@ -38,13 +37,14 @@
     </div>
   </section>
 
-  <!-- HAKKIMIZDA -->
+  <!-- HAKKIMIZDA (kısa kart) -->
   <section id="hakkimizda" class="section">
     <div class="container">
       <div class="card about">
         <div class="about__text">
           <h2>Hakkımızda</h2>
-          <p>SGTEK, kamu kurumları ve işletmelere yüksek performanslı cihazlar ile siber güvenlik çözümleri sunar. Kalite, hız ve güvenilirlik odaklı yaklaşımımızla ürün seçiminden teslimata kadar her aşamada yanınızdayız.</p>
+          <p>SGT Bilişim Hizmetleri, kamu ve kurumsal sektörde güvenilir, ölçülebilir ve sürdürülebilir teknoloji hizmetleri üretmek amacıyla kuruldu. Kurucu ekip, 1988’e uzanan sektör deneyimini ve saha bilgisini SGT çatısı altında bir araya getirerek; tedarikten siber güvenliğe, kurulumdan yaşam döngüsü yönetimine kadar bütünsel bir hizmet mimarisi kurguladı.</p>
+          <p><a id="openAbout2" href="#kurumsal" class="btn btn--cta" style="margin-top:10px">Detaylı Hakkımızda</a></p>
         </div>
         <div class="about__media">
           <img src="img/about.jpg" alt="Endüstriyel üretim bandı">
@@ -53,18 +53,18 @@
     </div>
   </section>
 
-   <!-- İLETİŞİM -->
-<section id="iletisim" class="section">
-  <div class="container contact">
-    <h2>İletişim</h2>
-    <div class="contact-row">
-      <span><strong>E-posta:</strong> info@sgtek.com.tr       .</span>
-      <span><strong>**Telefon:</strong> 0850 277 0396       .</span>
-      <span><strong>**Faks:</strong> 0212 482 8833       .</span>
-      <span><strong>**Adres:</strong> Esatpaşa Mah. Adnan Menderes Cad. No:42/A Ataşehir-İSTANBUL</span>
+  <!-- İLETİŞİM -->
+  <section id="iletisim" class="section">
+    <div class="container contact">
+      <h2>İletişim</h2>
+      <div class="contact-row">
+        <span><strong>E-posta:</strong> info@sgtek.com.tr</span>
+        <span><strong>Telefon:</strong> 0850 277 0396</span>
+        <span><strong>Faks:</strong> 0212 482 8833</span>
+        <span><strong>Adres:</strong> Esatpaşa Mah. Adnan Menderes Cad. No:42/A Ataşehir-İSTANBUL</span>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
   <!-- FOOTER -->
   <footer class="footer">
@@ -79,8 +79,49 @@
     </div>
   </footer>
 
-<script>
-  document.getElementById('yil').textContent = new Date().getFullYear();
-</script>
+  <!-- >>> ABOUT OVERLAY (modal konteyner) <<< -->
+  <div id="aboutOverlay" class="about-overlay" hidden></div>
+
+  <script>
+    document.getElementById('yil').textContent = new Date().getFullYear();
+
+    // Modal: ayrı dosyayı dinamik yükle
+    document.addEventListener('DOMContentLoaded', () => {
+      const aboutOverlay = document.getElementById('aboutOverlay');
+      const openAboutBtn1 = document.getElementById('openAbout');
+      const openAboutBtn2 = document.getElementById('openAbout2');
+      let aboutLoaded = false;
+
+      async function ensureAboutLoaded(){
+        if (aboutLoaded) return;
+        const res = await fetch('about-modal.html', { cache: 'no-store' });
+        if (!res.ok) throw new Error('about-modal.html yüklenemedi');
+        const html = await res.text();
+        aboutOverlay.innerHTML = html;
+
+        const closeBtn = aboutOverlay.querySelector('#aboutClose');
+        if (closeBtn) closeBtn.addEventListener('click', closeAbout);
+        aboutOverlay.addEventListener('click', (e)=>{ if(e.target === aboutOverlay) closeAbout(); });
+        aboutLoaded = true;
+      }
+
+      async function openAbout(e){
+        if (e) e.preventDefault();
+        await ensureAboutLoaded();
+        aboutOverlay.classList.add('is-open');
+        aboutOverlay.hidden = false;
+        document.body.style.overflow = 'hidden';
+      }
+      function closeAbout(){
+        aboutOverlay.classList.remove('is-open');
+        aboutOverlay.hidden = true;
+        document.body.style.overflow = '';
+      }
+
+      if (openAboutBtn1) openAboutBtn1.addEventListener('click', openAbout);
+      if (openAboutBtn2) openAboutBtn2.addEventListener('click', openAbout);
+      document.addEventListener('keydown', (e)=>{ if(!aboutOverlay.hidden && e.key === 'Escape') closeAbout(); });
+    });
+  </script>
 </body>
 </html>
