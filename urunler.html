@@ -70,7 +70,7 @@
       </a>
       <nav class="nav" aria-label="Ana menü">
         <a href="index.html">Ana Sayfa</a>
-        <a href="index.html#hakkimizda">Kurumsal</a>
+        <a href="#" id="openAbout" data-open-about>Kurumsal</a>
         <a href="Siber Güvenlik">Siber Güvenlik</a>
         <a href="urunler.html" aria-current="page">Ürünler</a>
         <a href="#iletisim" onclick="document.getElementById('footer-contact').scrollIntoView({behavior:'smooth'});return false;">İletişim</a>
@@ -523,5 +523,61 @@
     }
   })();
 </script>
+
+<!-- KURUMSAL MODAL -->
+<div id="aboutOverlay" class="overlay" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="aboutTitle">
+    <div class="modal__hdr">
+      <h3 id="aboutTitle">Kurumsal</h3>
+      <button id="aboutClose" class="modal__close" aria-label="Kapat">×</button>
+    </div>
+    <div class="about-main">
+      <div id="aboutContent" class="about-content"><!-- içerik buraya gelecek --></div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const aboutOverlay = document.getElementById('aboutOverlay');
+  const aboutContent = document.getElementById('aboutContent');
+  const btnOpen      = document.getElementById('openAbout');
+  const btnClose     = document.getElementById('aboutClose');
+
+  function openOverlay(el){ el.classList.add('is-open'); el.hidden=false; document.body.style.overflow='hidden'; }
+  function closeOverlay(el){ el.classList.remove('is-open'); el.hidden=true; document.body.style.overflow=''; }
+
+  async function openAbout(e){
+    e.preventDefault(); // navigasyonu kesin durdur
+    try {
+      const res  = await fetch('about-modal.html', { cache: 'no-store' });
+      const html = await res.text();
+      const doc  = new DOMParser().parseFromString(html, 'text/html');
+      const root = doc.getElementById('aboutModal') || doc.body;
+      aboutContent.innerHTML = root ? root.innerHTML : html;
+
+      // İçerikte data-close-about varsa kapat
+      aboutContent.addEventListener('click', ev=>{
+        if(ev.target.closest('[data-close-about]')) closeOverlay(aboutOverlay);
+      }, { once:true });
+
+      openOverlay(aboutOverlay);
+    } catch (err) {
+      // fetch bir sebeple hata verirse son çare iframe (file:// dahil)
+      aboutContent.innerHTML = '<iframe src="about-modal.html" class="about-frame" title="Hakkımızda" loading="lazy" style="width:100%;height:75vh;border:0;border-radius:8px;background:#fff"></iframe>';
+      openOverlay(aboutOverlay);
+    }
+  }
+
+  // Arkaplana tıklama ve ESC ile kapat
+  aboutOverlay.addEventListener('click', ev => { if(ev.target === aboutOverlay) closeOverlay(aboutOverlay); });
+  document.addEventListener('keydown', ev => { if(!aboutOverlay.hidden && ev.key === 'Escape') closeOverlay(aboutOverlay); });
+
+  // Bağla
+  if (btnOpen)  btnOpen.addEventListener('click', openAbout);
+  if (btnClose) btnClose.addEventListener('click', () => closeOverlay(aboutOverlay));
+})();
+</script>
+
 </body>
 </html>
