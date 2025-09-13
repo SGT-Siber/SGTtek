@@ -1,0 +1,55 @@
+<!-- contact-modal.html -->
+<div id="contactModal" class="overlay" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="contactTitle">
+    <div class="modal__hdr">
+      <h3 id="contactTitle">İletişim</h3>
+      <button class="modal__close" aria-label="Kapat">×</button>
+    </div>
+
+    <div class="modal__main">
+      <style>
+        /* Bu modal'a özel düzen (yalnızca bu kökün altında geçerli) */
+        #contactModal .contact-grid{
+          display:grid; grid-template-columns:1.2fr 1fr; gap:18px; align-items:start;
+        }
+        #contactModal .contact-grid h4{ margin:10px 0 8px; }
+        #contactModal .contact-list{ margin:8px 0 0 0; padding-left:18px; }
+        #contactModal .contact-list li{ margin:4px 0; }
+        #contactModal .mapwrap iframe{
+          width:100%; aspect-ratio:4/3; border:0; border-radius:12px;
+        }
+        @media (max-width: 920px){
+          #contactModal .contact-grid{ grid-template-columns:1fr; }
+        }
+      </style>
+
+      <div class="contact-grid">
+        <!-- Sol: bilgiler -->
+        <div>
+          <h4>Bizimle İletişime Geçin</h4>
+          <ul class="contact-list">
+            <li><strong>E-posta:</strong> <a href="mailto:info@sgtek.com.tr">info@sgtek.com.tr</a></li>
+            <li><strong>Telefon:</strong> <a href="tel:+908502770396">0850 277 0396</a></li>
+            <li><strong>Faks:</strong> <a href="tel:+902124828833">0212 482 8833</a></li>
+            <li><strong>Adres:</strong> Esatpaşa Mah. Adnan Menderes Cad. No:42/A Ataşehir – İSTANBUL</li>
+          </ul>
+          <div style="display:flex; gap:12px; margin-top:12px">
+            <a class="btn btn--secondary" href="mailto:info@sgtek.com.tr">E-posta Gönder</a>
+            <a class="btn btn--primary" target="_blank"
+               href="https://www.google.com/maps/dir//Esatpa%C5%9Fa,+Adnan+Menderes+Cd+No:42,+Ata%C5%9Fehir%2F%C4%B0stanbul/">
+              Hemen Ara
+            </a>
+          </div>
+        </div>
+
+        <!-- Sağ: harita -->
+        <div class="mapwrap" aria-label="Harita">
+          <iframe
+            src="https://www.google.com/maps?q=Esatpa%C5%9Fa%20Mah.%20Adnan%20Menderes%20Cad.%20No:42/A%20Ata%C5%9Fehir%20%C4%B0STANBUL&output=embed"
+            loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

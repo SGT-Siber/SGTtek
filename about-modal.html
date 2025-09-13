@@ -1,40 +1,90 @@
-<!-- about-modal.html -->
-<div id="aboutModal" class="about-modal" role="dialog" aria-modal="true" aria-labelledby="aboutTitle">
-  <div class="about-modal__hdr">
-    <h2 id="aboutTitle">Hakkımızda</h2>
-    <!-- İç kapatma butonu — çarpıya basınca kapanması için urunler.html’deki kapatma dinleyicisi arka plana/üst çarpıya zaten bağlı.
-         Eğer bunu da kapatmak için kullanmak istersen, urunler.html’de
-         aboutContent içinde [data-close-about] tıklamalarında closeAbout() çağırabilirsin. -->
-    <button class="about-modal__close" data-close-about aria-label="Kapat">×</button>
-  </div>
+<!-- about-modal.html (güncel) -->
+<div id="aboutModal" class="overlay" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="aboutTitle">
+    <!-- Sadece kapatma butonu olan üst şerit -->
+    <div class="modal__hdr" style="border-bottom:none;">
+      <h3 id="aboutTitle" class="sr-only">Hakkımızda</h3>
+      <button class="modal__close" aria-label="Kapat">×</button>
+    </div>
 
-  <div class="about-modal__content">
-    <p><strong>SGT Bilişim Hizmetleri A.Ş.</strong>, kamu ve kurumsal sektörde güvenilir, ölçülebilir ve sürdürülebilir teknoloji hizmetleri üretmek amacıyla kuruldu. Kurucu ekip, <strong>1988’e uzanan</strong> sektör deneyimini ve saha bilgisini SGT çatısı altında bir araya getirerek; tedarikten siber güvenliğe, kurulumdan yaşam döngüsü yönetimine kadar bütünsel bir hizmet mimarisi kurguladı.</p>
+    <div class="modal__main">
+      <style>
+        /* Bu stiller yalnızca bu modal içinde geçerlidir */
+        #aboutModal .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+        #aboutModal h2{font-size:26px;margin:0 0 12px}
+        #aboutModal h3{font-size:18px;margin:20px 0 8px}
+        #aboutModal p{margin:10px 0;color:#334155}
+        #aboutModal ul{margin:8px 0 12px 20px;color:#334155}
+        #aboutModal li{margin:6px 0}
+        #aboutModal strong{color:#0f172a}
+        #aboutModal .muted{color:#64748b}
+        #aboutModal .cta{display:flex;justify-content:flex-end;margin-top:18px}
+        #aboutModal .btn.btn--cta{font-weight:700}
+        @media (max-width:720px){
+          #aboutModal h2{font-size:22px}
+        }
+      </style>
 
-    <h3>Ne yapıyoruz?</h3>
-    <ul>
-      <li><strong>Tedarik &amp; DMO:</strong> Bilgisayar, monitör, yazıcı ve çevre birimleri dahil <strong>DMO onaylı</strong> ürün gamı; uygun konfigürasyon seçimi, tekliflendirme ve zamanında teslim.</li>
-      <li><strong>Siber Güvenlik:</strong> Ağ segmentasyonu, uç nokta güvenliği, yama ve zafiyet yönetimi, kimlik ve erişim yönetimi, e-posta/gateway koruması.</li>
-      <li><strong>Kurulum &amp; Devreye Alma:</strong> Proje planlama, dokümantasyon, test ve devreye alma.</li>
-      <li><strong>Bakım–Destek &amp; SLA:</strong> Periyodik bakım, uzaktan izleme, yedek parça/garanti takibi, yerinde destek ve SLA taahhütleri.</li>
-    </ul>
+      <h2>Hakkımızda</h2>
 
-    <h3>Neden SGT?</h3>
-    <ul>
-      <li><strong>Kamu tecrübesi:</strong> Portföyümüzün <strong>%70’i</strong> kamu kurumlarından oluşur; DMO ve ilgili mevzuat süreçlerinde deneyimliyiz.</li>
-      <li><strong>Uçtan uca hizmet:</strong> Keşif → tedarik → entegrasyon → operasyonel destek → iyileştirme döngüsü.</li>
-      <li><strong>Şeffaflık ve uyum:</strong> KVKK ve bilgi güvenliği prensiplerine bağlı, denetlenebilir süreçler; sözleşme ve kabul adımlarında tam uyum.</li>
-      <li><strong>Süreklilik odağı:</strong> Stok ve tedarik zinciri yönetimiyle yüksek erişilebilirlik, hızlı müdahale ve sürdürülebilir işletim.</li>
-    </ul>
+      <p>
+        <strong>SGT Bilişim Hizmetleri A.Ş.</strong>, kamu ve kurumsal sektörde güvenilir, ölçülebilir ve sürdürülebilir
+        teknoloji hizmetleri üretmek amacıyla kuruldu. Kurucu ekip, <strong>1988’e uzanan</strong> sektör deneyimini ve saha
+        bilgisini SGT çatısı altında bir araya getirerek; tedarikten siber güvenliğe, kurulumdan yaşam döngüsü yönetimine
+        kadar bütünsel bir hizmet mimarisi kurguladı.
+      </p>
 
-    <h3>Misyon &amp; Vizyon</h3>
-    <p><strong>Misyonumuz:</strong> Kurumlara doğru çözümü, doğru zamanda ve doğru bütçeyle ulaştırarak operasyonel süreklilik ve güvenliği artırmak.</p>
-    <p><strong>Vizyonumuz:</strong> Kamu ve kurumsal pazarda güvenilirlik, kalite ve sürdürülebilirlik dendiğinde akla gelen ilk teknoloji iş ortağı olmak.</p>
+      <h3>Ne yapıyoruz?</h3>
+      <ul>
+        <li>
+          <strong>Tedarik &amp; DMO:</strong> Bilgisayar, monitör, yazıcı ve çevre birimleri dahil <strong>DMO onaylı</strong> ürün gamı;
+          uygun konfigürasyon seçimi, tekliflendirme ve zamanında teslim.
+        </li>
+        <li>
+          <strong>Siber Güvenlik:</strong> Ağ segmentasyonu, uç nokta güvenliği, yama ve zafiyet yönetimi, kimlik ve erişim yönetimi,
+          e-posta/gateway koruması.
+        </li>
+        <li>
+          <strong>Kurulum &amp; Devreye Alma:</strong> Proje planlama, dokümantasyon, test ve devreye alma.
+        </li>
+        <li>
+          <strong>Bakım–Destek &amp; SLA:</strong> Periyodik bakım, uzaktan izleme, yedek parça/garanti takibi, yerinde destek ve SLA
+          taahhütleri.
+        </li>
+      </ul>
 
-    <p>SGT; söz verdiği kaliteyi, sahadaki uygulanabilirliği ve sonrasında sağlanan destekle birleştirir. Bizim için başarı, yalnızca bir projenin kapanışı değil; sistemlerin sorunsuz çalıştığı, kullanıcıların rahat ettiği ve kurumların hedeflerine güvenle ilerlediği bir <strong>süreklilik</strong> halidir.</p>
+      <h3>Neden SGT?</h3>
+      <ul>
+        <li>
+          <strong>Kamu tecrübesi:</strong> Portföyümüzün <strong>%70’i</strong> kamu kurumlarından oluşur; DMO ve ilgili mevzuat süreçlerinde deneyimliyiz.
+        </li>
+        <li>
+          <strong>Uçtan uca hizmet:</strong> Keşif → tedarik → entegrasyon → operasyonel destek → iyileştirme döngüsü.
+        </li>
+        <li>
+          <strong>Şeffaflık ve uyum:</strong> KVKK ve bilgi güvenliği prensiplerine bağlı, denetlenebilir süreçler; sözleşme ve kabul adımlarında tam uyum.
+        </li>
+        <li>
+          <strong>Süreklilik odağı:</strong> Stok ve tedarik zinciri yönetimiyle yüksek erişilebilirlik, hızlı müdahale ve sürdürülebilir işletim.
+        </li>
+      </ul>
 
-    <div class="about-cta">
-      <a class="btn btn--cta" href="urunler.html">DMO Ürünlerini Gör</a>
+      <h3>Misyon &amp; Vizyon</h3>
+      <p>
+        <strong>Misyonumuz:</strong> Kurumlara doğru çözümü, doğru zamanda ve doğru bütçeyle ulaştırarak operasyonel süreklilik ve güvenliği artırmak.
+      </p>
+      <p>
+        <strong>Vizyonumuz:</strong> Kamu ve kurumsal pazarda güvenilirlik, kalite ve sürdürülebilirlik dendiğinde akla gelen ilk teknoloji iş ortağı olmak.
+      </p>
+      <p class="muted">
+        SGT; söz verdiği kaliteyi, sahadaki uygulanabilirliği ve sonrasında sağlanan destekle birleştirir. Bizim için başarı,
+        yalnızca bir projenin kapanışı değil; sistemlerin sorunsuz çalıştığı, kullanıcıların rahat ettiği ve kurumların hedeflerine
+        güvenle ilerlediği bir <strong>süreklilik</strong> halidir.
+      </p>
+
+      <div class="cta">
+        <a class="btn btn--cta" href="urunler.html">DMO Ürünlerini Gör</a>
+      </div>
     </div>
   </div>
 </div>

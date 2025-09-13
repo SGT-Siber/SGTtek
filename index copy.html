@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SGTEK – Kurumlar için Teknoloji ve Güvenlik</title>
+  <meta name="description" content="DMO onaylı ürünler ve siber güvenlik hizmetleri">
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <!-- Sitenin mevcut stilleri -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- Hızlı fix için minimal ek stiller (style.css ile çakışmaz) -->
+  <style>
+    /* Menü için istenen font */
+    .nav{ font-family: 'Segoe UI', sans-serif; font-weight:500; }
+
+    /* Hakkımızda (kısa) kartı */
+    .about-card{
+      background:#fff; border:1px solid #e5e7eb; border-radius:16px;
+      box-shadow:0 10px 20px rgba(0,0,0,.06);
+      display:grid; grid-template-columns:1.2fr 1fr; gap:24px; padding:24px;
+    }
+    .about-card p{ color:#64748b; margin:8px 0 0 }
+    .about-card h2{ margin:0 0 8px; color:#0f172a }
+    .about-card .actions{ margin-top:14px; display:flex; gap:10px; flex-wrap:wrap }
+    .about-card img{ width:100%; height:auto; border-radius:12px; display:block }
+    @media (max-width:900px){ .about-card{ grid-template-columns:1fr; } }
+
+    /* Modal iskeleti (Kurumsal + İletişim) */
+    .overlay{ position:fixed; inset:0; background:rgba(15,23,42,.58); display:none; z-index:1000; }
+    .overlay.is-open{ display:grid; place-items:center; }
+    .modal{ width:min(900px,96vw); max-height:90vh; overflow:auto; background:#fff; border-radius:14px; padding:12px; }
+    .modal__hdr{ display:flex; justify-content:space-between; align-items:center; gap:8px; padding:6px 6px 10px 8px; }
+    .modal__close{ border:0; background:#f1f5f9; width:34px; height:34px; border-radius:10px; font-size:18px; cursor:pointer; }
+    .about-content, .contact-content{ padding:8px 4px; color:#334155; }
+    .about-content h2, .about-content h3,
+    .contact-content h2, .contact-content h3{ color:#0f172a; margin-top:12px; }
+    .about-frame, .contact-frame{ width:100%; height:75vh; border:0; background:#fff; border-radius:8px; }
+    .contact-list{list-style:none; padding:0; margin:0}
+    .contact-list li{margin:8px 0; color:#475569}
+    .contact-list strong{color:#0f172a}
+  </style>
+</head>
+<body>
+  <!-- HEADER -->
+  <header class="header">
+    <div class="container header__inner">
+      <a class="brand" href="index.html" aria-label="SGTEK Ana Sayfa">
+        <img src="img/sgtlogo.png" alt="SGTEK logo">
+      </a>
+      <nav class="nav" aria-label="Ana menü">
+        <a href="index.html">Ana Sayfa</a>
+        <a href="#" data-open-about>Kurumsal</a>
+        <a href="Siber Güvenlik">Siber Güvenlik</a>
+        <a href="urunler.html">Ürünler</a>
+        <a href="#" data-open-contact>İletişim</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero" role="region" aria-label="Karşılama">
+    <div class="hero__bg">
+      <img src="img/center.png" alt="Teknoloji arka plan">
+    </div>
+    <div class="container hero__content">
+      <h1>Kamu ve İş Dünyası için Hassas Teknoloji</h1>
+      <p>DMO onaylı ürün tedariki • Güvenilir ve hızlı hizmet</p>
+      <a class="btn btn--cta" href="urunler.html">Ürünleri Gör</a>
+    </div>
+  </section>
+
+  <!-- HAKKIMIZDA (Kısa – ortadaki bölüm) -->
+  <section class="section">
+    <div class="container">
+      <div class="about-card">
+        <div>
+          <h2>Hakkımızda</h2>
+          <p>
+            SGT Bilişim Hizmetleri A.Ş., kamu kurumları ve kurumsal işletmelere yüksek
+            performanslı donanım tedariki ile kapsamlı siber güvenlik çözümleri sunar.
+            DMO onaylı ürün portföyü, sertifikalı ekip ve güvenilir lojistik
+            kabiliyetleriyle tedarikten devreye almaya kadar tüm süreçlerde yanınızdadır.
+          </p>
+          <p>
+            1988’den bu yana biriken saha tecrübesi ve kalite odaklı yaklaşımımızla;
+            donanım, ağ güvenliği, bakım-destek ve danışmanlık hizmetlerini tek çatı
+            altında sunuyoruz.
+          </p>
+          <div class="actions">
+            <a href="#" class="btn btn--cta" data-open-about>Devamını Oku</a>
+            <a href="urunler.html" class="btn">DMO Ürün Listesi</a>
+          </div>
+        </div>
+        <div>
+          <img src="img/about.jpg" alt="SGT — kurumsal hizmetler">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- İLETİŞİM (sayfa içi bölüm – dursun; menüden modal açılıyor) -->
+  <section id="iletisim" class="section">
+    <div class="container contact">
+      <h2>İletişim</h2>
+      <div class="contact-row">
+        <span><strong>E-posta:</strong> info@sgtek.com.tr</span>
+        <span><strong>Telefon:</strong> 0850 277 0396</span>
+        <span><strong>Faks:</strong> 0212 482 8833</span>
+        <span><strong>Adres:</strong> Esatpaşa Mah. Adnan Menderes Cad. No:42/A Ataşehir-İSTANBUL</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <p>© <span id="yil"></span> SGTEK Tüm Hakları Saklıdır</p>
+      <nav class="footer__nav">
+        <a href="#Çerezler">Çerezler</a>
+        <a href="#">KVKK</a>
+        <a href="#">Gizlilik</a>
+        <a href="#">Kullanım Şartları</a>
+      </nav>
+    </div>
+  </footer>
+
+  <!-- KURUMSAL MODAL -->
+  <div id="aboutOverlay" class="overlay" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="aboutTitle">
+      <div class="modal__hdr">
+        <h3 id="aboutTitle">Kurumsal</h3>
+        <button class="modal__close" data-close-modal aria-label="Kapat">×</button>
+      </div>
+      <div id="aboutContent" class="about-content"><!-- yüklenecek --></div>
+    </div>
+  </div>
+
+  <!-- İLETİŞİM MODAL -->
+  <div id="contactOverlay" class="overlay" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="contactTitle">
+      <div class="modal__hdr">
+        <h3 id="contactTitle">İletişim</h3>
+        <button class="modal__close" data-close-modal aria-label="Kapat">×</button>
+      </div>
+      <div id="contactContent" class="contact-content"><!-- yüklenecek / fallback --></div>
+    </div>
+  </div>
+
+  <!-- JS -->
+  <script>
+    // footer yılı
+    document.getElementById('yil').textContent = new Date().getFullYear();
+
+    (function(){
+      /* ---------- Genel modal yardımcıları ---------- */
+      function openOverlay(overlay){
+        overlay.classList.add('is-open');
+        overlay.hidden = false;
+        document.body.style.overflow = 'hidden';
+      }
+      function closeOverlay(overlay){
+        overlay.classList.remove('is-open');
+        overlay.hidden = true;
+        document.body.style.overflow = '';
+      }
+
+      // Dışarı tıklama & ESC
+      document.querySelectorAll('.overlay').forEach(ov=>{
+        ov.addEventListener('click', e=>{ if(e.target === ov) closeOverlay(ov); });
+      });
+      document.addEventListener('keydown', e=>{
+        if(e.key === 'Escape'){
+          document.querySelectorAll('.overlay').forEach(ov=>{
+            if(!ov.hidden) closeOverlay(ov);
+          });
+        }
+      });
+      document.addEventListener('click', e=>{
+        const btn = e.target.closest('[data-close-modal]');
+        if(btn){
+          const ov = btn.closest('.overlay');
+          if(ov) closeOverlay(ov);
+        }
+      });
+
+      /* ---------- Kurumsal (about-modal.html) ---------- */
+      const aboutOverlay = document.getElementById('aboutOverlay');
+      const aboutContent = document.getElementById('aboutContent');
+
+      async function openAbout(e){
+        if(e) e.preventDefault();
+        try{
+          const res  = await fetch('about-modal.html', { cache:'no-store' });
+          if(!res.ok) throw new Error('HTTP ' + res.status);
+          const html = await res.text();
+          const doc  = new DOMParser().parseFromString(html, 'text/html');
+          const root = doc.getElementById('aboutModal') || doc.body;
+          aboutContent.innerHTML = root.innerHTML;
+        }catch(err){
+          // yedek: iframe
+          aboutContent.innerHTML = '<iframe src="about-modal.html" class="about-frame" title="Hakkımızda" loading="lazy"></iframe>';
+        }
+        openOverlay(aboutOverlay);
+      }
+      document.querySelectorAll('[data-open-about]').forEach(a=>a.addEventListener('click', openAbout));
+
+      /* ---------- İletişim (contact-modal.html varsa yükler) ---------- */
+      const contactOverlay = document.getElementById('contactOverlay');
+      const contactContent = document.getElementById('contactContent');
+
+      const contactFallbackHTML = `
+        <ul class="contact-list">
+          <li><strong>E-posta:</strong> info@sgtek.com.tr</li>
+          <li><strong>Telefon:</strong> 0850 277 0396</li>
+          <li><strong>Faks:</strong> 0212 482 8833</li>
+          <li><strong>Adres:</strong> Esatpaşa Mah. Adnan Menderes Cad. No:42/A Ataşehir-İSTANBUL</li>
+        </ul>
+      `;
+
+      async function openContact(e){
+        if(e) e.preventDefault();
+        try{
+          const res  = await fetch('contact-modal.html', { cache:'no-store' });
+          if(!res.ok) throw new Error('HTTP ' + res.status);
+          const html = await res.text();
+          const doc  = new DOMParser().parseFromString(html, 'text/html');
+          const root = doc.getElementById('contactModal') || doc.body;
+          contactContent.innerHTML = root.innerHTML;
+        }catch(err){
+          contactContent.innerHTML = contactFallbackHTML;
+        }
+        openOverlay(contactOverlay);
+      }
+      document.querySelectorAll('[data-open-contact]').forEach(a=>a.addEventListener('click', openContact));
+    })();
+  </script>
+</body>
+</html>
