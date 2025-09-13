@@ -1,17 +1,14 @@
-/* =========== ÜRÜNLER SAYFASI (tam dosya) =========== */
+/* =========== ÜRÜNLER SAYFASI =========== */
 
 /* Grid: her kart aynı yükseklikte */
 .product-grid{
   display:grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 24px;
-  align-items: stretch !important;     /* kartları uzat */
+  align-items: stretch !important;
 }
 
-/* Grid içindeki her kart satır yüksekliğini tamamen doldursun */
-.product-grid > .product-card{
-  height: 100%;
-}
+.product-grid > .product-card{ height: 100%; }
 
 /* Kart */
 .product-card{
@@ -19,12 +16,12 @@
   border:1px solid #e5e7eb;
   border-radius:16px;
   box-shadow:0 10px 20px rgba(0,0,0,.06);
-  display:flex;                  /* önemli */
-  flex-direction:column;         /* önemli */
-  overflow:hidden;               /* kenar taşmalarını kes */
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
 }
 
-/* Üstteki görsel (buton) – default siyah outline’ı kapat */
+/* Görsel */
 .imgwrap{
   display:block;
   width:100%;
@@ -33,7 +30,7 @@
   background:transparent;
   appearance:none; -webkit-appearance:none; -moz-appearance:none;
   cursor:pointer;
-  flex:0 0 auto;                 /* boyu sabit kalsın */
+  flex:0 0 auto;
 }
 .imgwrap img{
   display:block;
@@ -43,17 +40,14 @@
 }
 .imgwrap:focus,
 .imgwrap:focus-visible,
-.imgwrap:active{
-  outline:none !important;
-  box-shadow:none !important;
-}
+.imgwrap:active{ outline:none !important; box-shadow:none !important; }
 
-/* Kart gövdesi: TÜM yazılar aynı sol hizada ve gövde kalan alanı doldurur */
+/* Kart gövdesi */
 .card-body{
   padding:0 16px 16px 16px;
-  display:flex;                  /* önemli */
-  flex-direction:column;         /* önemli */
-  flex:1 1 auto;                 /* önemli – kalan alanı doldurur */
+  display:flex;
+  flex-direction:column;
+  flex:1 1 auto;
 }
 .card-body h3{ margin:12px 0 8px; font-size:20px; line-height:1.3; }
 .brand-line, .meta, .desc, .price-wrap, .btn-row{ margin-left:0; }
@@ -62,7 +56,7 @@
 .brand-line{ margin-top:6px; color:#334155; font-size:14px; }
 .brand-label{ font-weight:400; margin-right:6px; }
 
-/* Meta: Cinsi + DMO Kodu (kod monospace & bold) */
+/* Meta */
 .meta{ list-style:none; padding:0; margin:8px 0 0; display:grid; gap:4px; }
 .meta li{ font-size:14px; color:#475569; }
 .meta .label{ font-weight:400; margin-right:6px; color:#475569; }
@@ -83,159 +77,140 @@
 .price-main{ margin-top:10px; font-weight:800; font-size:22px; color:#0f172a; }
 .price-sub{ margin-top:2px; color:#64748b; font-size:13px; }
 
-/* BUTON: her kartın EN ALTINA sabitle */
+/* DMO butonu en altta */
 .btn-row{
-  margin-top:auto !important;    /* kritik: alta iter */
+  margin-top:auto !important;
   display:flex;
-  justify-content:flex-end;      /* sağda */
+  justify-content:flex-end;
 }
 
-/* Modal içi tipografi (varsa) */
-.md-row{ margin:2px 0; color:#475569; }
-.md-row .label{ font-weight:400; margin-right:6px; }
-.md-row .code{
-  font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
-  font-weight:700;
+/* Başlık ve arama */
+.pg-title{ text-align:center; margin:0 0 12px; }
+.searchrow{ display:flex; gap:12px; align-items:center; margin: 8px 0 14px; }
+.searchwrap{ flex:1; }
+.searchwrap input{
+  width:100%; max-width:680px;
+  border-radius:12px; padding:10px 12px;
+  border:1px solid #e5e7eb; background:#fff;
 }
-.md-price-main{ font-weight:800; font-size:22px; margin:6px 0; }
-.md-price-sub{ color:#64748b; }
-
-/* Başlık ve arama kutusunu ortala */
-.pg-title{
-  text-align: center;
-  margin: 0 0 12px;
-}
-
-.searchbar{
-  display: flex;
-  justify-content: center;   /* ortala */
-  margin: 12px 0 24px;
-}
-
-.searchbar input{
-  width: 100%;
-  max-width: 680px;          /* arama kutusu genişliği */
-  border-radius: 12px;
-}
-
-/* ===== Modal – düzen düzeltmeleri ===== */
-
-/* Kaplama açıkken */
-.overlay{position:fixed;inset:0;display:none;place-items:center;padding:24px;background:rgba(15,23,42,.6);z-index:9999}
-.overlay.is-open{display:grid}
-
-/* Modal kutu */
-.modal{width:min(100%, 980px);max-height:90vh;background:#fff;border-radius:16px;overflow:auto;box-shadow:0 24px 64px rgba(0,0,0,.25)}
-.modal__hdr{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid #e5e7eb}
-.modal__close{border:0;background:transparent;cursor:pointer;font-size:24px;line-height:1}
-
-/* --- Yeni grid: solda görüntü bloğu (viewer+thumbs), sağda bilgi --- */
-.modal__main{
-  display:grid;
-  grid-template-columns: minmax(0,1fr) 340px; /* sol - sağ */
-  grid-template-rows: auto auto;              /* viewer, thumbs */
-  gap:16px;
-  padding:16px;
-}
-
-/* Büyük görsel */
-.viewer{
-  grid-column:1; grid-row:1;
-  display:flex;align-items:center;justify-content:center;
-  min-height:360px;background:#f8fafc;border:1px solid #e5e7eb;border-radius:8px;
-}
-.viewer img{max-width:100%;max-height:70vh;object-fit:contain}
-
-/* Thumbs: viewer’ın ALTINDA yatay şerit */
-.thumbs{
-  grid-column:1; grid-row:2;
-  display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;
-}
-.thumb{border:1px solid #e5e7eb;border-radius:10px;padding:4px;background:#fff;cursor:pointer;flex:0 0 auto}
-.thumb img{display:block;height:72px;width:auto}
-.thumb.active{outline:2px solid #0B5FFF}
-
-/* Sağdaki bilgi sütunu */
-.modal__meta{
-  grid-column:2; grid-row:1 / span 2;
-  display:flex;flex-direction:column;gap:8px;
-}
-.md-row{margin:2px 0;color:#475569}
-.md-row .label{font-weight:400;margin-right:6px}
-.md-price-main{font-weight:800;font-size:22px;margin:6px 0}
-.md-price-sub{color:#64748b}
-
-/* DMO butonu sağ altta sabit */
-.modal__meta .btn--dmo{
-  align-self:flex-end;
-  margin-top:auto;           /* içeriğin altına ittir */
-}
-
-/* Başlık & arama ortalama (zaten varsa override eder) */
-.pg-title{ text-align:center; margin:0 0 12px }
-.searchbar{ display:flex; justify-content:center; margin:12px 0 16px }
-.searchbar input{ width:100%; max-width:680px; border-radius:12px }
-
-/* Araç çubuğu (sıralama + sayfa boyutu) */
-.toolbar{ display:flex; justify-content:flex-end; gap:12px; margin:8px 0 12px }
-.tool{ display:inline-flex; align-items:center; gap:8px; font-size:14px; color:#475569 }
-.tool select{ padding:8px 10px; border:1px solid #e5e7eb; border-radius:10px; background:#fff }
+.controls{ display:flex; gap:10px; align-items:center; }
+.controls label{ display:flex; align-items:center; gap:8px; color:#475569; font-size:14px; }
+.controls select{ padding:8px 10px; border-radius:10px; border:1px solid #e5e7eb; background:#fff; }
 
 /* Pager */
 .pager{ display:flex; justify-content:center; gap:8px; margin:18px 0 4px }
-.page-btn{ padding:8px 12px; border:1px solid #e5e7eb; background:#fff; border-radius:10px; cursor:pointer }
-.page-btn.is-active{ background:#0B5FFF; color:#fff; border-color:#0B5FFF }
-.page-btn:disabled{ opacity:.5; cursor:not-allowed }
+.pager > button{ padding:8px 12px; border:1px solid #e5e7eb; background:#fff; border-radius:10px; cursor:pointer }
+.pager > button.active{ background:#0B5FFF; color:#fff; border-color:#0B5FFF }
+.pager > button:disabled{ opacity:.5; cursor:not-allowed }
 
-/* Modal – görsel tıklanabilir göstergesi */
-.viewer{ cursor:pointer }
+/* Inline İletişim */
+.inline-contact{padding:28px 0 6px}
+.inline-contact h2{margin:0 0 10px}
+.inline-contact .contact-line{display:flex;flex-wrap:wrap;gap:20px;color:#334155}
+.inline-contact .pair strong{margin-right:6px;color:#0f172a}
 
-/* ===== GALERİ MODAL DÜZENİ (FIX) ===== */
-.overlay{ position:fixed; inset:0; background:rgba(15,23,42,.58); display:none; z-index:50; }
-.overlay.is-open{ display:grid; place-items:center; }
-
-.modal{ width:min(1100px, 96vw); max-height:90vh; overflow:auto; background:#fff; border-radius:14px; padding:12px; }
-.modal__hdr{ display:flex; justify-content:space-between; align-items:center; padding:6px 6px 10px 8px; }
-.modal__close{ border:0; background:#f1f5f9; width:34px; height:34px; border-radius:10px; font-size:18px; cursor:pointer; }
-
-/* Grid: sol = büyük görsel, sağ = thumbs */
-.modal__main{
-  display:grid;
-  grid-template-columns: minmax(360px,1fr) 180px; /* sağ sütun sabit genişlik */
-  align-items:start;
-  gap:12px;
+/* ===== ÜRÜN GALERİ MODALI (yalnızca #galleryOverlay) ===== */
+#galleryOverlay{
+  position: fixed; inset: 0;
+  display: none; place-items: center;
+  padding: 24px;
+  background: rgba(15,23,42,.6);
+  z-index: 9999;
 }
+#galleryOverlay.is-open{ display:grid; }
 
-/* Hücre yerleşimleri */
-.viewer{ grid-column:1; grid-row:1; background:#f8fafc; display:flex; align-items:center; justify-content:center; padding:10px; border-radius:10px; }
-.viewer img{ max-height:58vh; width:auto; height:auto; cursor:pointer; }
-
-.thumbs{
-  grid-column:2; grid-row:1;               /* hep sağ sütunda */
+#galleryOverlay .modal{
+  width: min(1100px, 96vw);
+  max-height: 90vh;
+  overflow: auto;
+  background: #fff;
+  border-radius: 14px;
+  box-sizing: border-box;
+  padding: 12px;
+  box-shadow: 0 24px 64px rgba(0,0,0,.25);
+}
+#galleryOverlay .modal__hdr{
+  display:flex; align-items:center; justify-content:space-between;
+  padding: 6px 6px 10px 8px;
+  border-bottom: 1px solid #e5e7eb;
+}
+#galleryOverlay .modal__close{
+  border:0; background:#f1f5f9;
+  width:34px; height:34px; border-radius:10px;
+  font-size:18px; cursor:pointer;
+}
+#galleryOverlay .modal__main{
+  display:grid;
+  grid-template-columns: minmax(360px,1fr) 180px;
+  align-items:start; gap:12px;
+}
+#galleryOverlay .viewer{
+  grid-column:1; grid-row:1;
+  display:flex; align-items:center; justify-content:center;
+  padding:10px; border-radius:10px;
+  background:#f8fafc; border:1px solid #e5e7eb;
+  cursor:pointer;
+}
+#galleryOverlay .viewer img{
+  max-height:58vh; width:auto; height:auto; object-fit:contain;
+}
+#galleryOverlay .thumbs{
+  grid-column:2; grid-row:1;
   display:flex; flex-direction:column; gap:10px;
   max-height:58vh; overflow:auto; padding:4px;
 }
-.thumb{ display:block; width:100%; border:2px solid transparent; border-radius:10px; padding:4px; background:#fff; }
-.thumb img{ width:100%; height:96px; object-fit:contain; display:block; }
-.thumb:focus{ outline:none; }
-.thumb.active{ border-color:#0B5FFF; }
-
-/* Meta bilgileri altta iki sütun boyunca */
-.modal__meta{ grid-column:1 / 3; grid-row:2; margin-top:8px; }
-.md-row{ margin:2px 0; color:#475569; }
-.md-row .label{ font-weight:400; margin-right:6px; }
-.md-row .code{
-  font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
-  font-weight:700;
+#galleryOverlay .thumb{
+  display:block; width:100%; cursor:pointer;
+  border:2px solid transparent; border-radius:10px;
+  padding:4px; background:#fff;
 }
-.md-price-main{ font-weight:800; font-size:22px; margin:6px 0; }
-.md-price-sub{ color:#64748b; }
-
-/* Dar ekran davranışı */
-@media (max-width: 720px){
-  .modal__main{ grid-template-columns: 1fr; }
-  .viewer{ grid-column:1; grid-row:1; }
-  .thumbs{ grid-column:1; grid-row:2; flex-direction:row; max-height:none; }
-  .thumb{ width:110px; }
-  .modal__meta{ grid-column:1; grid-row:3; }
+#galleryOverlay .thumb img{
+  width:100%; height:96px; object-fit:contain; display:block;
 }
+#galleryOverlay .thumb.active{ border-color:#0B5FFF; }
+#galleryOverlay .modal__meta{ grid-column:1/3; grid-row:2; margin-top:8px; }
+#galleryOverlay .md-row{ margin:2px 0; color:#475569; }
+#galleryOverlay .md-price-main{ font-weight:800; font-size:22px; margin:6px 0; }
+#galleryOverlay .md-price-sub{ color:#64748b; }
+
+@media (max-width:720px){
+  #galleryOverlay .modal__main{ grid-template-columns:1fr; }
+  #galleryOverlay .viewer{ grid-column:1; grid-row:1; }
+  #galleryOverlay .thumbs{ grid-column:1; grid-row:2; flex-direction:row; max-height:none; }
+  #galleryOverlay .thumb{ width:110px; }
+  #galleryOverlay .modal__meta{ grid-column:1; grid-row:3; }
+}
+
+/* ===== KURUMSAL MODALI (yalnızca #aboutOverlay) ===== */
+#aboutOverlay{
+  position: fixed; inset: 0;
+  display: none; place-items: center;
+  background: rgba(15,23,42,.45);
+  z-index: 10000;
+  padding: 20px;
+}
+#aboutOverlay.is-open{ display:grid; }
+
+#aboutOverlay .modal{
+  box-sizing: border-box;
+  width: min(960px, 94vw);
+  max-height: min(88vh, 100%);
+  overflow: auto;
+  background:#fff; border-radius:16px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.25);
+  padding: 24px 24px 28px; position: relative;
+}
+#aboutOverlay .modal__close{
+  position:absolute; top:10px; right:10px;
+  width:36px; height:36px; line-height:36px;
+  border:0; border-radius:10px; background:#f1f5f9;
+  color:#0f172a; cursor:pointer; font-size:22px; font-weight:700;
+}
+
+/* About içerik yardımcı (opsiyonel) */
+#aboutOverlay .about-grid{ display:grid; gap:16px; grid-template-columns:1fr; }
+@media (min-width:900px){
+  #aboutOverlay .about-grid{ grid-template-columns: 1.15fr .85fr; }
+}
+#aboutOverlay img{ max-width:100%; height:auto; display:block; }
+#aboutOverlay h1,#aboutOverlay h2,#aboutOverlay h3{ margin:0 0 8px; }
