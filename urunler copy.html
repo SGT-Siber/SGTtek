@@ -7,99 +7,6 @@
   <meta name="description" content="DMO onaylı ürünler kataloğu">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/urunler.css">
-
-  <style>
-    /* ---- Sayfaya özel düzenler ---- */
-    [hidden]{display:none!important}
-
-    .page-head { text-align:center; margin-bottom: 8px; }
-    .pg-title  { letter-spacing:.4px; margin: 8px 0 14px; }
-
-    /* Arama + sağdaki kontroller aynı satırda */
-    .searchrow { display:flex; gap:12px; align-items:center; margin: 8px 0 14px; }
-    .searchwrap { flex:1; }
-    .searchwrap input{
-      width:100%;
-      max-width:none;
-      border-radius:12px;
-      padding:10px 12px;
-      border:1px solid #e5e7eb;
-      background:#fff;
-    }
-    .controls { display:flex; gap:10px; align-items:center; }
-    .controls label{ display:flex; align-items:center; gap:8px; color:#475569; font-size:14px; }
-    .controls select{
-      padding:8px 10px; border-radius:10px; border:1px solid #e5e7eb; background:#fff;
-    }
-
-    /* Kartlar */
-    .product-grid{ display:grid; grid-template-columns: repeat(auto-fill,minmax(280px,1fr)); gap:18px; }
-    .product-card{ display:flex; flex-direction:column; background:#fff; border:1px solid #e5e7eb; border-radius:16px; box-shadow:0 10px 20px rgba(0,0,0,.06); overflow:hidden; }
-    .imgwrap{ border:0; background:transparent; padding:0; cursor:pointer; }
-    .imgwrap img{ width:100%; height:210px; object-fit:contain; display:block; }
-    .imgwrap:focus{ outline:none; }
-
-    .card-body{ padding:12px 14px 14px; display:flex; flex-direction:column; }
-    .card-body h3{ margin:6px 0 8px; color:#0f172a; min-height:48px; }
-    .brand-line{ margin-top:2px; color:#334155; font-size:14px; }
-    .brand-label{ font-weight:400; margin-right:6px; }
-
-    .meta{ list-style:none; display:grid; gap:4px; margin:8px 0 0; padding:0; }
-    .meta li{ font-size:14px; color:#475569; }
-    .meta .label{ font-weight:400; margin-right:6px; }
-    .meta .emph { font-weight:700; color:#0f172a; } /* Cinsi kalın */
-    .meta .code {
-      font-family: ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
-      font-weight:700; /* DMO Kodu kalın */
-    }
-
-    .desc{ margin-top:6px; color:#64748b; font-size:14px;
-      display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden;
-      min-height: 60px;
-    }
-
-    .price-wrap{ margin-top:10px; }
-    .price-main{ font-weight:800; font-size:22px; color:#0f172a; } /* Fiyat büyük/kalın */
-    .price-sub{ margin-top:2px; color:#64748b; font-size:13px; }
-
-    .btn-row{ display:flex; justify-content:flex-end; margin-top:12px; }
-    .btn.btn--dmo{ background:#0B5FFF; color:#fff; border:0; padding:10px 14px; border-radius:12px; text-decoration:none; }
-
-    /* Pager */
-    .pager { display:flex; gap:6px; justify-content:center; margin-top:18px; flex-wrap: wrap; }
-    .pager button{
-      padding:8px 11px; border-radius:10px; border:1px solid #e5e7eb; background:#fff; min-width:38px;
-    }
-    .pager .active{ background:#0B5FFF; color:#fff; border-color:#0B5FFF; }
-
-    /* Modal */
-    .overlay{ position:fixed; inset:0; background:rgba(15,23,42,.58); display:none; z-index:50; }
-    .overlay.is-open{ display:grid; place-items:center; }
-    .modal{ width:min(1100px, 96vw); max-height:90vh; overflow:auto; background:#fff; border-radius:14px; padding:12px; }
-    .modal__hdr{ display:flex; justify-content:space-between; align-items:center; padding:6px 6px 10px 8px; }
-    .modal__close{ border:0; background:#f1f5f9; width:34px; height:34px; border-radius:10px; font-size:18px; cursor:pointer; }
-    .modal__main{ display:grid; grid-template-columns:1fr 160px; gap:12px; }
-    .viewer{ background:#f8fafc; display:flex; align-items:center; justify-content:center; padding:10px; border-radius:10px; }
-    .viewer img{ max-height:58vh; width:auto; height:auto; cursor:pointer; }
-    .thumbs{ display:grid; gap:10px; overflow:auto; padding:4px; }
-    .thumb{ border:2px solid transparent; border-radius:10px; padding:4px; background:#fff; }
-    .thumb.active{ border-color:#0B5FFF; }
-    .thumb img{ width:100%; height:90px; object-fit:contain; display:block; }
-    .modal__meta{ margin-top:10px; grid-column:1 / -1; }
-    .md-row{ margin:2px 0; color:#475569; }
-    .md-row .label{ font-weight:400; margin-right:6px; }
-    .md-row .code{
-      font-family: ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
-      font-weight:700;
-    }
-    .md-price-main{ font-weight:800; font-size:22px; margin:6px 0; }
-    .md-price-sub{ color:#64748b; }
-
-    @media (max-width: 720px){
-      .searchrow{ flex-direction:column; align-items:stretch; }
-      .controls{ justify-content:flex-end; }
-    }
-  </style>
 </head>
 
 <body>
@@ -111,10 +18,10 @@
       </a>
       <nav class="nav" aria-label="Ana menü">
         <a href="index.html">Ana Sayfa</a>
-       <a href="#kurumsal" id="openAbout">Kurumsal</a>
-        <a href="Siber Güvenlik">Siber Güvenlik</a>
+        <a href="#" data-open-about>Kurumsal</a>
+        <a href="#">Siber Güvenlik</a>
         <a href="urunler.html" aria-current="page">Ürünler</a>
-        <a href="#iletisim" onclick="document.getElementById('footer-contact').scrollIntoView({behavior:'smooth'});return false;">İletişim</a>
+        <a href="#iletisim" onclick="document.getElementById('iletisim-inline').scrollIntoView({behavior:'smooth'});return false;">İletişim</a>
       </nav>
     </div>
   </header>
@@ -125,11 +32,13 @@
       <div class="page-head">
         <h1 class="pg-title">DMO ÜRÜN LİSTESİ</h1>
 
-        <!-- Arama + sağ kontroller aynı satır -->
         <div class="searchrow">
           <div class="searchwrap">
-            <input id="searchInput" type="search" placeholder="Ürün adı, marka, cinsi, DMO kodu veya açıklama ara..." aria-label="Ürün ara">
+            <input id="searchInput" type="search"
+                   placeholder="Ürün adı, marka, cinsi, DMO kodu veya açıklama ara..."
+                   aria-label="Ürün ara">
           </div>
+
           <div class="controls">
             <label for="sortSelect">Sırala:</label>
             <select id="sortSelect">
@@ -160,20 +69,45 @@
     </div>
   </main>
 
+  <!-- INLINE İLETİŞİM -->
+  <section id="iletisim-inline" class="inline-contact">
+    <div class="container">
+      <h2>İletişim</h2>
+      <p class="contact-line">
+        <span class="pair">
+          <strong>E-posta:</strong>
+          <a href="mailto:info@sgtek.com.tr">info@sgtek.com.tr</a>
+        </span>
+        <span class="pair">
+          <strong>Telefon:</strong>
+          <a href="tel:+908502770396">0850 277 0396</a>
+        </span>
+        <span class="pair">
+          <strong>Faks:</strong>
+          <a href="tel:+902124828833">0212 482 8833</a>
+        </span>
+        <span class="pair addr">
+          <strong>Adres:</strong>
+          Esatpaşa Mah. Adnan Menderes Cad. No:42/A Ataşehir-İSTANBUL
+        </span>
+      </p>
+    </div>
+  </section>
+
   <!-- FOOTER -->
-  <footer class="footer" id="footer-contact">
+  <footer class="footer">
     <div class="container footer__inner">
       <p>© <span id="yil"></span> SGTEK Tüm Hakları Saklıdır</p>
       <nav class="footer__nav">
-        <a href="#Çerezler">Çerezler</a>
-        <a href="#">KVKK</a>
-        <a href="#">Gizlilik</a>
-        <a href="#">Kullanım Şartları</a>
+        <a href="cerezler.html" target="_blank" rel="noopener">Çerezler</a>
+        <a href="kvkk.html" target="_blank" rel="noopener">KVKK</a>
+        <a href="gizlilik.html" target="_blank" rel="noopener">Gizlilik</a>
+        <a href="kullanim-sartlari.html" target="_blank" rel="noopener">Kullanım Şartları</a>
       </nav>
     </div>
   </footer>
 
-  <!-- MODAL -->
+  <!-- ÜRÜN DETAY (GALERİ) MODAL -->
   <div id="galleryOverlay" class="overlay" hidden>
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
       <div class="modal__hdr">
@@ -186,12 +120,12 @@
         <div id="thumbs" class="thumbs"></div>
 
         <div class="modal__meta">
-          <p id="modalBrand" class="md-row"></p>
-          <p id="modalType"  class="md-row"></p>
+          <p id="modalBrand"   class="md-row"></p>
+          <p id="modalType"    class="md-row"></p>
           <p id="modalDmoCode" class="md-row"></p>
-          <p id="modalPrice" class="md-price-main"></p>
+          <p id="modalPrice"    class="md-price-main"></p>
           <p id="modalPriceSub" class="md-price-sub"></p>
-          <p id="modalDesc" class="md-row" style="color:#334155"></p>
+          <p id="modalDesc"     class="md-row" style="color:#334155"></p>
           <div style="display:flex; justify-content:flex-end; margin-top:10px;">
             <a id="modalDmo" class="btn btn--dmo" href="#" target="_blank" rel="noopener" hidden>DMO’ya Git</a>
           </div>
@@ -200,426 +134,370 @@
     </div>
   </div>
 
-<script>
-  document.getElementById('yil').textContent = new Date().getFullYear();
+  <!-- KURUMSAL (ABOUT) MODALI -->
+  <div id="aboutOverlay" class="overlay" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="aboutTitle">
+      <button id="aboutClose" class="modal__close" aria-label="Kapat">×</button>
+      <div id="aboutContent"></div>
+    </div>
+  </div>
 
-  /* ====== CONFIG ====== */
-  const SHEET_ID  = "1RtHLgzmaAsjNfQM79b5jy4kkaRbPFdMznbO3kktr3Ng";
-  const SHEET_GID = "0";
-  const CSV_URL   = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=${SHEET_GID}`;
-  const FALLBACK_IMG =
-    'data:image/svg+xml;utf8,' + encodeURIComponent(
-      `<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600">
-         <rect width="100%" height="100%" fill="#f1f5f9"/>
-         <g fill="#94a3b8" font-family="Segoe UI,Arial" font-size="24" text-anchor="middle">
-           <text x="400" y="300">Görsel bulunamadı</text>
-         </g>
-       </svg>`
-    );
+  <script>
+    /* Yıl */
+    document.getElementById('yil').textContent = new Date().getFullYear();
 
-  const STATE = { q:'', sort:'', page:1, pageSize:9 };
+    /* ====== Google Sheets CSV kaynağı ====== */
+    const SHEET_ID  = "1RtHLgzmaAsjNfQM79b5jy4kkaRbPFdMznbO3kktr3Ng";
+    const SHEET_GID = "0";
+    const CSV_URL   = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=${SHEET_GID}`;
 
-  /* ===== Utilities ===== */
-  function normalize(s){
-    return (s||"").toString()
-      .replace(/\u00A0/g,' ')
-      .trim().replace(/\s+/g,' ')
-      .toLowerCase().normalize('NFD')
-      .replace(/[\u0300-\u036f]/g,'')
-      .replace(/ı/g,'i').replace(/İ/g,'i');
-  }
+    /* Yedek görsel */
+    const FALLBACK_IMG =
+      'data:image/svg+xml;utf8,' + encodeURIComponent(
+        `<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600">
+           <rect width="100%" height="100%" fill="#f1f5f9"/>
+           <g fill="#94a3b8" font-family="Segoe UI,Arial" font-size="24" text-anchor="middle">
+             <text x="400" y="300">Görsel bulunamadı</text>
+           </g>
+         </svg>`
+      );
 
-  function toNumPrice(v){
-    if(v===null||v===undefined) return NaN;
-    const s = String(v).replace(/[^\d,.-]/g,'').replace(/\./g,'').replace(',', '.');
-    const n = Number(s);
-    return Number.isFinite(n) ? n : NaN;
-  }
+    const STATE = { q:'', sort:'', page:1, pageSize:9 };
 
-  function parseCSV(text){
-    const rows=[]; let row=[], val="", inQ=false;
-    for(let i=0;i<text.length;i++){
-      const ch=text[i], nx=text[i+1];
-      if(inQ){
-        if(ch=='"' && nx=='"'){ val+='"'; i++; }
-        else if(ch=='"'){ inQ=false; }
-        else { val+=ch; }
-      }else{
-        if(ch=='"'){ inQ=true; }
-        else if(ch==','){ row.push(val); val=""; }
-        else if(ch=='\n'){ row.push(val); rows.push(row); row=[]; val=""; }
-        else if(ch=='\r'){ }
-        else { val+=ch; }
-      }
+    /* Yardımcılar */
+    function normalize(s){
+      return (s||"").toString()
+        .replace(/\u00A0/g,' ')
+        .trim().replace(/\s+/g,' ')
+        .toLowerCase().normalize('NFD')
+        .replace(/[\u0300-\u036f]/g,'')
+        .replace(/ı/g,'i').replace(/İ/g,'i');
     }
-    row.push(val); rows.push(row);
-    return rows.filter(r=>r.some(c=>normalize(c)!==""));
-  }
-
-  function detectColumns(headers){
-    const H=headers.map(normalize);
-    const hasAll=(h,subs)=>subs.every(s=>h.includes(s));
-    const find=(cands)=>{
-      for(const cand of cands){
-        for(let i=0;i<H.length;i++){
-          const h=H[i];
-          if(Array.isArray(cand)?hasAll(h,cand):(h===cand||h.includes(cand))) return i;
+    function toNumPrice(v){
+      if(v===null||v===undefined) return NaN;
+      const s = String(v).replace(/[^\d,.-]/g,'').replace(/\./g,'').replace(',', '.');
+      const n = Number(s);
+      return Number.isFinite(n) ? n : NaN;
+    }
+    function parseCSV(text){
+      const rows=[]; let row=[], val="", inQ=false;
+      for(let i=0;i<text.length;i++){
+        const ch=text[i], nx=text[i+1];
+        if(inQ){
+          if(ch=='"' && nx=='"'){ val+='"'; i++; }
+          else if(ch=='"'){ inQ=false; }
+          else { val+=ch; }
+        }else{
+          if(ch=='"'){ inQ=true; }
+          else if(ch==','){ row.push(val); val=""; }
+          else if(ch=='\n'){ row.push(val); rows.push(row); row=[]; val=""; }
+          else if(ch=='\r'){ }
+          else { val+=ch; }
         }
       }
-      return -1;
-    };
-    const title   = find([["urun","ad"],["urun","adi"],["urun","baslik"],"title","product"]);
-    const brand   = find(["marka","brand","uretici","manufacturer"]);
-    const type    = find(["cinsi","tur","tür"]);
-    const desc    = find(["urun aciklama","aciklama","açiklama","aciklamasi","açiklamasi","urun aciklamasi"]);
-    const dmoCode = find([["dmo","kod"],["dmo","kodu"]]);
-    const price   = find([["fiyat"],["price"]]);
-    const priceKdv= find([["kdv","dahil"],["fiyat","kdv"],["vat","incl"],["kdv","dahili"]]);
-    const dmoLink = find([["dmo","link"],["dmo","url"],["dmo","baglanti"]]);
-
-    const photos=[]; H.forEach((h,i)=>{ if(h.startsWith("foto")||h.startsWith("resim")||h.startsWith("image")) photos.push(i); });
-
-    return { title, brand, type, desc, dmoCode, price, priceKdv, dmoLink, photos };
-  }
-
-  const fmtTRY = v=>{
-    const n = toNumPrice(v);
-    if(!Number.isFinite(n)) return "";
-    return new Intl.NumberFormat('tr-TR',{style:'currency',currency:'TRY',maximumFractionDigits:2}).format(n);
-  };
-  const short=(t,n=180)=>!t?"":(String(t).trim().length>n?String(t).trim().slice(0,n-1)+"…":String(t).trim());
-
-  /* ===== Data load ===== */
-  async function fetchCSV(){
-    const r=await fetch(CSV_URL,{cache:"no-store"});
-    if(!r.ok) throw new Error("CSV HTTP "+r.status);
-    const rows=parseCSV(await r.text());
-    if(!rows.length) return [];
-    const idx=detectColumns(rows[0]);
-    if(idx.title<0) throw new Error('Başlık kolonu ("Ürün Adı" / "Ürün Başlığı") bulunamadı');
-
-    const items=[];
-    for(let i=1;i<rows.length;i++){
-      const c=rows[i];
-      const title=(c[idx.title]||"").toString().trim(); if(!title) continue;
-      const brand=idx.brand>=0?(c[idx.brand]||"").toString().trim():"";
-      const type =idx.type >=0?(c[idx.type ]||"").toString().trim():"";
-      const desc =idx.desc >=0?(c[idx.desc ]||"").toString().trim():"";
-      const dmoCode=idx.dmoCode>=0?(c[idx.dmoCode]||"").toString().trim():"";
-      const price  =idx.price  >=0?(c[idx.price]  ||"").toString().trim():"";
-      const priceKdv=idx.priceKdv>=0?(c[idx.priceKdv]||"").toString().trim():"";
-      const dmo   =idx.dmoLink>=0?(c[idx.dmoLink]||"").toString().trim():"";
-
-      const photos=[]; for(const pi of idx.photos){ const v=(c[pi]||"").toString().trim(); if(v) photos.push(v); }
-
-      items.push({title,brand,type,desc,dmoCode,price,priceKdv,dmo,photos});
+      row.push(val); rows.push(row);
+      return rows.filter(r=>r.some(c=>normalize(c)!==""));
     }
-    return items;
-  }
+    function detectColumns(headers){
+      const H=headers.map(normalize);
+      const hasAll=(h,subs)=>subs.every(s=>h.includes(s));
+      const find=(cands)=>{
+        for(const cand of cands){
+          for(let i=0;i<H.length;i++){
+            const h=H[i];
+            if(Array.isArray(cand)?hasAll(h,cand):(h===cand||h.includes(cand))) return i;
+          }
+        }
+        return -1;
+      };
+      const title   = find([["urun","ad"],["urun","adi"],["urun","baslik"],"title","product"]);
+      const brand   = find(["marka","brand","uretici","manufacturer"]);
+      const type    = find(["cinsi","tur","tür"]);
+      const desc    = find(["urun aciklama","aciklama","açiklama","aciklamasi","açiklamasi","urun aciklamasi"]);
+      const dmoCode = find([["dmo","kod"],["dmo","kodu"]]);
+      const price   = find([["fiyat"],["price"]]);
+      const priceKdv= find([["kdv","dahil"],["fiyat","kdv"],["vat","incl"],["kdv","dahili"]]);
+      const dmoLink = find([["dmo","link"],["dmo","url"],["dmo","baglanti"]]);
 
-  /* ===== Render ===== */
-  let ALL_ITEMS=[];
+      const photos=[];
+      H.forEach((h,i)=>{ if(h.startsWith("foto")||h.startsWith("resim")||h.startsWith("image")) photos.push(i); });
 
-  function itemMatches(it, q){
-    if(!q) return true;
-    const t = q.toLowerCase();
-    return (it.title||"").toLowerCase().includes(t) ||
-           (it.brand||"").toLowerCase().includes(t) ||
-           (it.type||"").toLowerCase().includes(t) ||
-           (it.dmoCode||"").toLowerCase().includes(t) ||
-           (it.desc||"").toLowerCase().includes(t);
-  }
-
-  function applySort(items){
-    const arr = items.slice();
-    const tie = (a,b) => (a.title||'').localeCompare(b.title||'', 'tr', {sensitivity:'base'});
-
-    switch(STATE.sort){
-      case 'typeAsc':
-        return arr.sort((a,b)=>{
-          const r = (a.type||'').localeCompare(b.type||'', 'tr', {sensitivity:'base'});
-          return r || tie(a,b);
-        });
-      case 'typeDesc':
-        return arr.sort((a,b)=>{
-          const r = (b.type||'').localeCompare(a.type||'', 'tr', {sensitivity:'base'});
-          return r || tie(a,b);
-        });
-      case 'brandAsc':
-        return arr.sort((a,b)=>{
-          const r = (a.brand||'').localeCompare(b.brand||'', 'tr', {sensitivity:'base'});
-          return r || tie(a,b);
-        });
-      case 'brandDesc':
-        return arr.sort((a,b)=>{
-          const r = (b.brand||'').localeCompare(a.brand||'', 'tr', {sensitivity:'base'});
-          return r || tie(a,b);
-        });
-      default:
-        return arr;
+      return { title, brand, type, desc, dmoCode, price, priceKdv, dmoLink, photos };
     }
-  }
-
-  function paginate(items){
-    const start = (STATE.page-1) * STATE.pageSize;
-    return items.slice(start, start + STATE.pageSize);
-  }
-
-  function renderPager(totalCount){
-    const pager = document.getElementById("pager");
-    pager.innerHTML = "";
-    const pages = Math.max(1, Math.ceil(totalCount / STATE.pageSize));
-
-    const add = (label, page, disabled=false, active=false)=>{
-      const b=document.createElement("button");
-      b.textContent=label;
-      if(disabled) b.disabled=true;
-      if(active) b.classList.add("active");
-      b.addEventListener("click", ()=>{ STATE.page=page; update(); });
-      pager.appendChild(b);
+    const fmtTRY = v=>{
+      const n = toNumPrice(v);
+      if(!Number.isFinite(n)) return "";
+      return new Intl.NumberFormat('tr-TR',{style:'currency',currency:'TRY',maximumFractionDigits:2}).format(n);
     };
+    const short=(t,n=180)=>!t?"":(String(t).trim().length>n?String(t).trim().slice(0,n-1)+"…":String(t).trim());
 
-    add("«", Math.max(1, STATE.page-1), STATE.page===1);
-    for(let p=1;p<=pages;p++) add(String(p), p, false, p===STATE.page);
-    add("»", Math.min(pages, STATE.page+1), STATE.page===pages);
-  }
+    /* Veri yükle */
+    async function fetchCSV(){
+      const r=await fetch(CSV_URL,{cache:"no-store"});
+      if(!r.ok) throw new Error("CSV HTTP "+r.status);
+      const rows=parseCSV(await r.text());
+      if(!rows.length) return [];
+      const idx=detectColumns(rows[0]);
+      if(idx.title<0) throw new Error('Başlık kolonu ("Ürün Adı" / "Ürün Başlığı") bulunamadı');
 
-  function renderProducts(items){
-    const grid=document.getElementById("productGrid");
-    const empty=document.getElementById("productEmpty");
-    grid.innerHTML=""; if(!items.length){ empty.hidden=false; return; } empty.hidden=true;
+      const items=[];
+      for(let i=1;i<rows.length;i++){
+        const c=rows[i];
+        const title=(c[idx.title]||"").toString().trim(); if(!title) continue;
+        const brand=idx.brand>=0?(c[idx.brand]||"").toString().trim():"";
+        const type =idx.type >=0?(c[idx.type ]||"").toString().trim():"";
+        const desc =idx.desc >=0?(c[idx.desc ]||"").toString().trim():"";
+        const dmoCode=idx.dmoCode>=0?(c[idx.dmoCode]||"").toString().trim():"";
+        const price  =idx.price  >=0?(c[idx.price]  ||"").toString().trim():"";
+        const priceKdv=idx.priceKdv>=0?(c[idx.priceKdv]||"").toString().trim():"";
+        const dmo   =idx.dmoLink>=0?(c[idx.dmoLink]||"").toString().trim():"";
 
-    const FALL = FALLBACK_IMG;
-    const frag=document.createDocumentFragment();
-    items.forEach(it=>{
-      const card=document.createElement("article");
-      card.className="product-card";
+        const photos=[]; for(const pi of idx.photos){ const v=(c[pi]||"").toString().trim(); if(v) photos.push(v); }
 
-      const imgBtn=document.createElement("button");
-      imgBtn.type="button"; imgBtn.className="imgwrap";
-      imgBtn.title="Görselleri aç"; imgBtn.setAttribute("aria-label","Görselleri aç");
-
-      const img=document.createElement("img");
-      img.src=(it.photos&&it.photos[0])||FALL;
-      img.alt=it.title; img.loading="lazy";
-      img.onerror = ()=>{ if(img.src!==FALL) img.src=FALL; };
-      imgBtn.appendChild(img);
-      imgBtn.addEventListener("click",()=>openGallery(it));
-      card.appendChild(imgBtn);
-
-      const body=document.createElement("div"); body.className="card-body"; card.appendChild(body);
-
-      const h3=document.createElement("h3"); h3.textContent=it.title; body.appendChild(h3);
-
-      if(it.brand){
-        const p=document.createElement("p"); p.className="brand-line";
-        p.innerHTML=`<span class="brand-label">Marka:</span>${it.brand}`;
-        body.appendChild(p);
+        items.push({title,brand,type,desc,dmoCode,price,priceKdv,dmo,photos});
       }
+      return items;
+    }
 
-      const ul=document.createElement("ul"); ul.className="meta";
-      if(it.type)    ul.innerHTML+=`<li><span class="label">Cinsi:</span><span class="emph">${it.type}</span></li>`;
-      if(it.dmoCode) ul.innerHTML+=`<li><span class="label">DMO Kodu:</span><span class="code">${it.dmoCode}</span></li>`;
-      body.appendChild(ul);
+    /* Render */
+    let ALL_ITEMS=[];
 
-      if(it.desc){ const p=document.createElement("p"); p.className="desc"; p.textContent=short(it.desc); body.appendChild(p); }
-
-      if(it.price || it.priceKdv){
-        const f1 = it.price ? fmtTRY(it.price) : "";
-        const f2 = it.priceKdv ? fmtTRY(it.priceKdv) : "";
-        const wrap=document.createElement("div"); wrap.className="price-wrap";
-        if(f1) wrap.innerHTML+=`<div class="price-main">${f1}</div>`;
-        if(f2) wrap.innerHTML+=`<div class="price-sub">KDV Dahil: ${f2}</div>`;
-        body.appendChild(wrap);
+    function itemMatches(it, q){
+      if(!q) return true;
+      const t = q.toLowerCase();
+      return (it.title||"").toLowerCase().includes(t) ||
+             (it.brand||"").toLowerCase().includes(t) ||
+             (it.type||"").toLowerCase().includes(t) ||
+             (it.dmoCode||"").toLowerCase().includes(t) ||
+             (it.desc||"").toLowerCase().includes(t);
+    }
+    function applySort(items){
+      const arr = items.slice();
+      const tie = (a,b) => (a.title||'').localeCompare(b.title||'', 'tr', {sensitivity:'base'});
+      switch(STATE.sort){
+        case 'typeAsc':
+          return arr.sort((a,b)=> (a.type||'').localeCompare(b.type||'', 'tr', {sensitivity:'base'}) || tie(a,b));
+        case 'typeDesc':
+          return arr.sort((a,b)=> (b.type||'').localeCompare(a.type||'', 'tr', {sensitivity:'base'}) || tie(a,b));
+        case 'brandAsc':
+          return arr.sort((a,b)=> (a.brand||'').localeCompare(b.brand||'', 'tr', {sensitivity:'base'}) || tie(a,b));
+        case 'brandDesc':
+          return arr.sort((a,b)=> (b.brand||'').localeCompare(a.brand||'', 'tr', {sensitivity:'base'}) || tie(a,b));
+        default:
+          return arr;
       }
+    }
+    function renderPager(totalCount){
+      const pager = document.getElementById("pager");
+      pager.innerHTML = "";
+      const pages = Math.max(1, Math.ceil(totalCount / STATE.pageSize));
+      const add = (label, page, disabled=false, active=false)=>{
+        const b=document.createElement("button");
+        b.textContent=label;
+        if(disabled) b.disabled=true;
+        if(active) b.classList.add("active");
+        b.addEventListener("click", ()=>{ STATE.page=page; update(); });
+        pager.appendChild(b);
+      };
+      add("«", Math.max(1, STATE.page-1), STATE.page===1);
+      for(let p=1;p<=pages;p++) add(String(p), p, false, p===STATE.page);
+      add("»", Math.min(pages, STATE.page+1), STATE.page===pages);
+    }
+    function renderProducts(items){
+      const grid=document.getElementById("productGrid");
+      const empty=document.getElementById("productEmpty");
+      grid.innerHTML=""; if(!items.length){ empty.hidden=false; return; } empty.hidden=true;
 
-      if(it.dmo){
-        const row=document.createElement("div"); row.className="btn-row";
-        const a=document.createElement("a"); a.href=it.dmo; a.target="_blank"; a.rel="noopener";
-        a.className="btn btn--dmo"; a.textContent="DMO’ya Git";
-        row.appendChild(a); body.appendChild(row);
-      }
+      const frag=document.createDocumentFragment();
+      items.forEach(it=>{
+        const card=document.createElement("article");
+        card.className="product-card";
 
-      frag.appendChild(card);
-    });
-    grid.appendChild(frag);
-  }
+        const imgWrap=document.createElement("div");
+        imgWrap.className="imgwrap";
+        const img=document.createElement("img");
+        img.src=(it.photos&&it.photos[0])||FALLBACK_IMG;
+        img.alt=it.title; img.loading="lazy";
+        img.onerror = ()=>{ if(img.src!==FALLBACK_IMG) img.src=FALLBACK_IMG; };
+        imgWrap.appendChild(img);
+        imgWrap.addEventListener("click",()=>openGallery(it));  // modal
+        card.appendChild(imgWrap);
 
-  /* ===== Modal ===== */
-  const overlay=document.getElementById("galleryOverlay");
-  const modalMain=document.getElementById("modalMain");
-  const modalTtl=document.getElementById("modalTitle");
-  const modalBrand=document.getElementById("modalBrand");
-  const modalType=document.getElementById("modalType");
-  const modalDmoCode=document.getElementById("modalDmoCode");
-  const modalPrice=document.getElementById("modalPrice");
-  const modalPriceSub=document.getElementById("modalPriceSub");
-  const modalDesc=document.getElementById("modalDesc");
-  const modalDmo=document.getElementById("modalDmo");
-  const thumbsEl=document.getElementById("thumbs");
-  const btnClose=document.getElementById("modalClose");
+        const body=document.createElement("div"); body.className="card-body"; card.appendChild(body);
 
-  function openOverlay(){
-    overlay.classList.add("is-open");
-    overlay.removeAttribute("hidden");
-    document.body.style.overflow="hidden";
-  }
-  function closeGallery(){
-    overlay.classList.remove("is-open");
-    overlay.setAttribute("hidden","");
-    document.body.style.overflow="";
-  }
+        const h3=document.createElement("h3"); h3.textContent=it.title; body.appendChild(h3);
 
-  function setMain(src, btn){
-    if(src){ modalMain.src=src; modalMain.alt="Ürün görseli"; }
-    else   { modalMain.removeAttribute("src"); modalMain.alt=""; }
-    Array.prototype.forEach.call(thumbsEl.children, el=>el.classList.remove("active"));
-    if(btn) btn.classList.add("active");
-  }
+        if(it.brand){
+          const p=document.createElement("p"); p.className="brand-line";
+          p.innerHTML=`<span class="brand-label">Marka:</span>${it.brand}`;
+          body.appendChild(p);
+        }
 
-  function openGallery(item){
-    modalTtl.textContent=item.title;
-    modalBrand.innerHTML=item.brand?`<span class="label">Marka:</span>${item.brand}`:"";
-    modalType.innerHTML=item.type?`<span class="label">Cinsi:</span><span class="emph">${item.type}</span>`:"";
-    modalDmoCode.innerHTML=item.dmoCode?`<span class="label">DMO Kodu:</span><span class="code">${item.dmoCode}</span>`:"";
+        const ul=document.createElement("ul"); ul.className="meta";
+        if(it.type)    ul.innerHTML+=`<li><span class="label">Cinsi:</span><span class="emph">${it.type}</span></li>`;
+        if(it.dmoCode) ul.innerHTML+=`<li><span class="label">DMO Kodu:</span><span class="code">${it.dmoCode}</span></li>`;
+        body.appendChild(ul);
 
-    const f1=item.price?fmtTRY(item.price):""; const f2=item.priceKdv?fmtTRY(item.priceKdv):"";
-    modalPrice.textContent=f1||""; modalPriceSub.textContent=f2?`KDV Dahil: ${f2}`:"";
-    modalDesc.textContent=item.desc||"";
-    if(item.dmo){ modalDmo.href=item.dmo; modalDmo.hidden=false; } else { modalDmo.hidden=true; }
+        if(it.desc){
+          const p=document.createElement("p");
+          p.className="desc"; p.textContent=short(it.desc);
+          body.appendChild(p);
+        }
 
-    thumbsEl.innerHTML="";
-    const photos=(item.photos||[]).filter(Boolean);
-    if(photos.length){
-      setMain(photos[0],null);
-      photos.forEach(src=>{
-        const t=document.createElement("button");
-        t.type="button"; t.className="thumb";
-        t.innerHTML=`<img src="${src}" alt="">`;
-        t.addEventListener("click",()=>setMain(src,t));
-        t.querySelector('img').onerror = (e)=>{ e.target.src = FALLBACK_IMG; };
-        thumbsEl.appendChild(t);
+        if(it.price || it.priceKdv){
+          const f1 = it.price ? fmtTRY(it.price) : "";
+          const f2 = it.priceKdv ? fmtTRY(it.priceKdv) : "";
+          const wrap=document.createElement("div"); wrap.className="price-wrap";
+          if(f1) wrap.innerHTML+=`<div class="price-main">${f1}</div>`;
+          if(f2) wrap.innerHTML+=`<div class="price-sub">KDV Dahil: ${f2}</div>`;
+          body.appendChild(wrap);
+        }
+
+        if(it.dmo){
+          const row=document.createElement("div"); row.className="btn-row";
+          const a=document.createElement("a"); a.href=it.dmo; a.target="_blank"; a.rel="noopener";
+          a.className="btn btn--dmo"; a.textContent="DMO’ya Git";
+          row.appendChild(a); body.appendChild(row);
+        }
+
+        frag.appendChild(card);
       });
-      if(thumbsEl.firstElementChild) thumbsEl.firstElementChild.classList.add("active");
-    }else{
-      setMain(FALLBACK_IMG,null);
-      thumbsEl.innerHTML='<div class="thumb thumb--empty">Fotoğraf yok</div>';
+      grid.appendChild(frag);
     }
 
-    // Büyük görsele tıklayınca sıradaki foto
-    modalMain.onclick = ()=>{
-      const imgs = [...thumbsEl.querySelectorAll('.thumb img')].map(x=>x.src);
-      if(!imgs.length) return;
-      const ix = imgs.indexOf(modalMain.src);
-      const next = imgs[(ix+1) % imgs.length];
-      const buttons = [...thumbsEl.querySelectorAll('.thumb')];
-      buttons.forEach(b=>b.classList.remove('active'));
-      const nextBtn = buttons[(ix+1) % buttons.length];
-      setMain(next, nextBtn);
-    };
+    /* Ürün Modal (Galeri) */
+    const overlay   = document.getElementById("galleryOverlay");
+    const modalMain = document.getElementById("modalMain");
+    const modalTtl  = document.getElementById("modalTitle");
+    const modalBrand= document.getElementById("modalBrand");
+    const modalType = document.getElementById("modalType");
+    const modalDmo  = document.getElementById("modalDmo");
+    const modalDmoCode = document.getElementById("modalDmoCode");
+    const modalPrice   = document.getElementById("modalPrice");
+    const modalPriceSub= document.getElementById("modalPriceSub");
+    const modalDesc    = document.getElementById("modalDesc");
+    const thumbsEl     = document.getElementById("thumbs");
+    const btnClose     = document.getElementById("modalClose");
 
-    openOverlay();
-  }
-
-  btnClose.addEventListener("click", closeGallery);
-  overlay.addEventListener("click", e=>{ if(e.target===overlay) closeGallery(); });
-  document.addEventListener("keydown", e=>{ if(!overlay.hidden && e.key==="Escape") closeGallery(); });
-
-  /* ===== Controls & Update ===== */
-  function update(){
-    const filtered = ALL_ITEMS.filter(it => itemMatches(it, STATE.q));
-    const sorted   = applySort(filtered);
-    const start    = (STATE.page-1) * STATE.pageSize;
-    const paged    = sorted.slice(start, start + STATE.pageSize);
-
-    renderProducts(paged);
-    renderPager(sorted.length);
-  }
-
-  function wireUI(){
-    const q = document.getElementById('searchInput');
-    const sortSel = document.getElementById('sortSelect');
-    const sizeSel = document.getElementById('pageSizeSelect');
-
-    sizeSel.value = String(STATE.pageSize);
-
-    q.addEventListener('input', ()=>{
-      STATE.q = q.value.trim();
-      STATE.page = 1;
-      update();
-    });
-
-    sortSel.addEventListener('change', ()=>{
-      STATE.sort = sortSel.value;
-      STATE.page = 1;
-      update();
-    });
-
-    sizeSel.addEventListener('change', ()=>{
-      STATE.pageSize = parseInt(sizeSel.value,10) || 9;
-      STATE.page = 1;
-      update();
-    });
-  }
-
-  /* ===== Boot ===== */
-  (async function init(){
-    try{
-      wireUI();
-      ALL_ITEMS = await fetchCSV();
-      update();
-    }catch(err){
-      console.error(err);
-      const dbg=document.getElementById("debugBox");
-      dbg.hidden=false;
-      dbg.innerHTML = `Ürünler yüklenemedi.<br><small style="color:#6b7280">Hata: ${String(err.message||err).replace(/</g,'&lt;')}</small><div style="margin-top:6px"><a target="_blank" href="${CSV_URL}">CSV test</a></div>`;
-      document.getElementById("productEmpty").hidden=false;
+    function openOverlay(){ overlay.classList.add("is-open"); overlay.hidden=false; document.body.style.overflow="hidden"; }
+    function closeGallery(){ overlay.classList.remove("is-open"); overlay.hidden=true; document.body.style.overflow=""; }
+    function setMain(src, btn){
+      if(src){ modalMain.src=src; modalMain.alt="Ürün görseli"; }
+      else   { modalMain.removeAttribute("src"); modalMain.alt=""; }
+      Array.prototype.forEach.call(thumbsEl.children, el=>el.classList.remove("active"));
+      if(btn) btn.classList.add("active");
     }
-  })();
-</script>
+    function openGallery(item){
+      modalTtl.textContent=item.title;
+      modalBrand.innerHTML=item.brand?`<span class="label">Marka:</span>${item.brand}`:"";
+      modalType.innerHTML=item.type?`<span class="label">Cinsi:</span><span class="emph">${item.type}</span>`:"";
+      modalDmoCode.innerHTML=item.dmoCode?`<span class="label">DMO Kodu:</span><span class="code">${item.dmoCode}</span>`:"";
 
-<script>
-  // Kurumsal (Hakkımızda) modalını urunler.html'e de yükle ve bağla
-  (async function attachAboutModal(){
-    try {
-      // about-modal.html zaten ekli değilse getirip gövdeye ekleyelim
-      if (!document.getElementById('aboutModal')) {
-        const res  = await fetch('about-modal.html', { cache: 'no-store' });
-        if (!res.ok) throw new Error('about-modal.html yüklenemedi: ' + res.status);
-        const html = await res.text();
-        const wrap = document.createElement('div');
-        wrap.innerHTML = html.trim();
-        // yalnız ilk kök düğümü ekleyelim
-        const node = wrap.firstElementChild;
-        if (node) document.body.appendChild(node);
+      const f1=item.price?fmtTRY(item.price):""; const f2=item.priceKdv?fmtTRY(item.priceKdv):"";
+      modalPrice.textContent=f1||""; modalPriceSub.textContent=f2?`KDV Dahil: ${f2}`:"";
+      modalDesc.textContent=item.desc||"";
+      if(item.dmo){ modalDmo.href=item.dmo; modalDmo.hidden=false; } else { modalDmo.hidden=true; }
+
+      thumbsEl.innerHTML="";
+      const photos=(item.photos||[]).filter(Boolean);
+      if(photos.length){
+        setMain(photos[0],null);
+        photos.forEach(src=>{
+          const t=document.createElement("button");
+          t.type="button"; t.className="thumb";
+          t.innerHTML=`<img src="${src}" alt="">`;
+          const img=t.querySelector('img');
+          img.onerror = ()=>{ img.src = FALLBACK_IMG; };
+          t.addEventListener("click",()=>setMain(img.src,t));
+          thumbsEl.appendChild(t);
+        });
+        if(thumbsEl.firstElementChild) thumbsEl.firstElementChild.classList.add("active");
+      }else{
+        setMain(FALLBACK_IMG,null);
+        thumbsEl.innerHTML='<div class="thumb thumb--empty">Fotoğraf yok</div>';
       }
 
-      const aboutModal = document.getElementById('aboutModal');
-      const btnOpen    = document.getElementById('openAbout');
-      const btnClose   = document.getElementById('aboutClose');
+      // Büyük görsele tıklayınca sıradaki foto
+      modalMain.onclick = ()=>{
+        const imgs = [...thumbsEl.querySelectorAll('.thumb img')].map(x=>x.src);
+        if(!imgs.length) return;
+        const ix = imgs.indexOf(modalMain.src);
+        const next = imgs[(ix+1) % imgs.length];
+        const buttons = [...thumbsEl.querySelectorAll('.thumb')];
+        buttons.forEach(b=>b.classList.remove('active'));
+        const nextBtn = buttons[(ix+1) % buttons.length];
+        setMain(next, nextBtn);
+      };
 
-      function openAbout() {
-        if (!aboutModal) return;
-        aboutModal.classList.add('is-open');
-        aboutModal.removeAttribute('hidden');
-        document.body.style.overflow = 'hidden';
-      }
-      function closeAbout() {
-        if (!aboutModal) return;
-        aboutModal.classList.remove('is-open');
-        aboutModal.setAttribute('hidden', '');
-        document.body.style.overflow = '';
-      }
-
-      btnOpen?.addEventListener('click', (e) => { e.preventDefault(); openAbout(); });
-      btnClose?.addEventListener('click', closeAbout);
-      aboutModal?.addEventListener('click', (e) => { if (e.target === aboutModal) closeAbout(); });
-      document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && aboutModal && !aboutModal.hasAttribute('hidden')) closeAbout(); });
-    } catch (err) {
-      console.warn('Kurumsal modal yüklenemedi:', err);
+      openOverlay();
     }
-  })();
-</script>
+    btnClose.addEventListener("click", closeGallery);
+    overlay.addEventListener("click", e=>{ if(e.target===overlay) closeGallery(); });
+    document.addEventListener("keydown", e=>{ if(!overlay.hidden && e.key==="Escape") closeGallery(); });
 
+    /* State/UI */
+    function update(){
+      const filtered = ALL_ITEMS.filter(it => itemMatches(it, STATE.q));
+      const sorted   = applySort(filtered);
+      const start    = (STATE.page-1) * STATE.pageSize;
+      const paged    = sorted.slice(start, start + STATE.pageSize);
+      renderProducts(paged);
+      renderPager(sorted.length);
+    }
+    function wireUI(){
+      const q      = document.getElementById('searchInput');
+      const sortSel= document.getElementById('sortSelect');
+      const sizeSel= document.getElementById('pageSizeSelect');
+      sizeSel.value = String(STATE.pageSize);
+      q.addEventListener('input', ()=>{ STATE.q = q.value.trim(); STATE.page = 1; update(); });
+      sortSel.addEventListener('change', ()=>{ STATE.sort = sortSel.value; STATE.page = 1; update(); });
+      sizeSel.addEventListener('change', ()=>{ STATE.pageSize = parseInt(sizeSel.value,10) || 9; STATE.page = 1; update(); });
+    }
+
+    (async function init(){
+      try{
+        wireUI();
+        ALL_ITEMS = await fetchCSV();
+        update();
+      }catch(err){
+        console.error(err);
+        const dbg=document.getElementById("debugBox");
+        dbg.hidden=false;
+        dbg.innerHTML = `Ürünler yüklenemedi.<br><small style="color:#6b7280">Hata: ${String(err.message||err).replace(/</g,'&lt;')}</small><div style="margin-top:6px"><a target="_blank" href="${CSV_URL}">CSV test</a></div>`;
+        document.getElementById("productEmpty").hidden=false;
+      }
+    })();
+
+    /* === Kurumsal (About) Modal === */
+    (function(){
+      const overlay = document.getElementById('aboutOverlay');
+      const mount   = document.getElementById('aboutContent');
+      const btnOpen = document.querySelector('[data-open-about]');
+      const btnClose= document.getElementById('aboutClose');
+
+      function open(){ overlay.classList.add('is-open'); overlay.hidden=false; document.body.style.overflow='hidden'; }
+      function close(){ overlay.classList.remove('is-open'); overlay.hidden=true; document.body.style.overflow=''; }
+
+      async function loadAbout(e){
+        e.preventDefault();
+        try{
+          const res  = await fetch('about-modal.html', { cache:'no-store' });
+          const html = await res.text();
+          const doc  = new DOMParser().parseFromString(html, 'text/html');
+          const root = doc.getElementById('aboutModal') || doc.body;
+          mount.innerHTML = root.innerHTML;
+          open();
+        }catch{
+          mount.innerHTML = '<iframe src="about-modal.html" style="width:100%;height:75vh;border:0;border-radius:8px;background:#fff" loading="lazy" title="Hakkımızda"></iframe>';
+          open();
+        }
+      }
+
+      btnOpen?.addEventListener('click', loadAbout);
+      btnClose?.addEventListener('click', close);
+      overlay.addEventListener('click', (e)=>{ if(e.target===overlay) close(); });
+      document.addEventListener('keydown', (e)=>{ if(!overlay.hidden && e.key==='Escape') close(); });
+    })();
+  </script>
 </body>
 </html>
