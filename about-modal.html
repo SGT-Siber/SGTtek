@@ -1,8 +1,11 @@
 <!-- about-modal.html -->
-<div class="about-modal" role="dialog" aria-modal="true" aria-labelledby="aboutTitle">
+<div id="aboutModal" class="about-modal" role="dialog" aria-modal="true" aria-labelledby="aboutTitle">
   <div class="about-modal__hdr">
     <h2 id="aboutTitle">Hakkımızda</h2>
-    <button id="aboutClose" class="about-modal__close" aria-label="Kapat">×</button>
+    <!-- İç kapatma butonu — çarpıya basınca kapanması için urunler.html’deki kapatma dinleyicisi arka plana/üst çarpıya zaten bağlı.
+         Eğer bunu da kapatmak için kullanmak istersen, urunler.html’de
+         aboutContent içinde [data-close-about] tıklamalarında closeAbout() çağırabilirsin. -->
+    <button class="about-modal__close" data-close-about aria-label="Kapat">×</button>
   </div>
 
   <div class="about-modal__content">
